@@ -1,0 +1,10 @@
+{
+  "name": "digital-study-plan",
+  "version": "1.0.0",
+  "description": "A digital study plan concept for CS-545",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Blake Zimmerman",
+  "license": "ISC"
+}
