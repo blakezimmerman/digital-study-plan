@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from './router';
 
-const placeholderState = 'placeholder';
-const placeholderReducer = (state = placeholderState) => placeholderState;
-
-const rootReducer = combineReducers({placeholderReducer});
+const rootReducer = combineReducers({ location: routerReducer });
 
 export default rootReducer;

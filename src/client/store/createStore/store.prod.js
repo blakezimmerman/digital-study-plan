@@ -1,10 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../rootReducer';
 import epicMiddleware from '../rootEpic';
+import { routerMiddleware, routerEnhancer } from '../router';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(epicMiddleware)
+  compose(
+    routerEnhancer,
+    applyMiddleware(epicMiddleware, routerMiddleware)
+  )
 );
 
 export default store;

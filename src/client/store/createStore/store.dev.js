@@ -1,11 +1,15 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from '../rootReducer';
 import epicMiddleware from '../rootEpic';
+import { routerMiddleware, routerEnhancer } from '../router';
 import logger from 'redux-logger';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(epicMiddleware, logger)
+  compose(
+    routerEnhancer,
+    applyMiddleware(epicMiddleware, routerMiddleware, logger)
+  )
 );
 
 if (module.hot) {
