@@ -1,5 +1,5 @@
 import * as React from 'react';
-import appStyles from './appStyles';
+import appStyles from './app.styles';
 import Link from 'redux-first-router-link';
 
 class App extends React.Component {
