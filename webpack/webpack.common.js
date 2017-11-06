@@ -27,7 +27,11 @@ exports.commonConfig = {
             loader: 'babel-loader',
             options: {
               presets: ['env', 'babel-preset-react'],
-              plugins: ['react-hot-loader/babel', 'transform-class-properties']
+              plugins: [
+                'react-hot-loader/babel',
+                'transform-class-properties',
+                'transform-object-rest-spread'
+              ]
             }
           }
         ],

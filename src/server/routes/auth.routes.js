@@ -43,7 +43,9 @@ router.get('/logout', (req, res) => {
 
 router.get('/passivelogin', (req, res) =>
   jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
-    (err || !decoded) ? res.json("Not Authorized") : res.json(decoded)
+    (err || !decoded)
+      ? res.json("Not Authorized")
+      : res.json({ userName: decoded.userName })
   )
 );
 
