@@ -16,14 +16,14 @@ const checkPassword = (hash, password) =>
   bcrypt.compareSync(password, hash);
 
 const generateToken = (resUser) =>
-  jwt.sign({ userName: resUser.userName }, secret);
+  jwt.sign({ userName: resUser.userName, studyPlan: resUser.studyPlan }, secret);
 
 router.post('/login', (req, res) => {
   findUser(req.body.userName)
     .then((user) => {
       if (user) {
         if (checkPassword(user.hashedPassword, req.body.password)) {
-          const resUser = { userName: user.userName };
+          const resUser = { userName: user.userName, studyPlan: user.studyPlan };
           res.cookie('token', generateToken(resUser), { httpOnly: true, signed: true });
           res.json(resUser);
         } else {
@@ -38,14 +38,14 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
   res.cookie('token', '', { httpOnly: true, signed: true, maxAge: 0 });
-  res.json('success');
+  res.redirect('/');
 });
 
 router.get('/passivelogin', (req, res) =>
   jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
     (err || !decoded)
       ? res.json("Not Authorized")
-      : res.json({ userName: decoded.userName })
+      : res.json({ userName: decoded.userName, studyPlan: decoded.studyPlan })
   )
 );
 

@@ -7,6 +7,7 @@ import { routeActions } from '../router/router';
 import Header from './header/header';
 import Login from './login/login';
 import Register from './login/register';
+import Configure from './configure/configure';
 import Dashboard from './dashboard/dashboard';
 import StudyPlan from './studyPlan/studyPlan';
 
@@ -24,6 +25,7 @@ class App extends React.Component {
       switch (this.props.location.pathname) {
         case ('/login'): return <Login/>;
         case ('/register'): return <Register/>;
+        case ('/configure'): return <Configure/>;
         case ('/dashboard'): return <Dashboard/>;
         case ('/studyplan'): return <StudyPlan/>;
         default: return <Dashboard/>;

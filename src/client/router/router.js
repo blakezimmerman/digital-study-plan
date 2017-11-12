@@ -8,6 +8,7 @@ const routesMap = {
   ENTRY: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  CONFIGURE: '/configure',
   DASHBOARD: '/dashboard',
   STUDY_PLAN: '/studyplan'
 }
@@ -23,6 +24,7 @@ export const routeActions = {
   ENTRY: actionCreator('ENTRY'),
   LOGIN: actionCreator('LOGIN'),
   REGISTER: actionCreator('REGISTER'),
+  CONFIGURE: actionCreator('CONFIGURE'),
   DASHBOARD: actionCreator('DASHBOARD'),
   STUDY_PLAN: actionCreator('STUDY_PLAN')
 };
