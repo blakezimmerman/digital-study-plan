@@ -22,7 +22,7 @@ class App extends React.Component {
 
   render() {
     const getPage = () => {
-      switch (this.props.location.pathname) {
+      switch (this.props.locationPath) {
         case ('/login'): return <Login/>;
         case ('/register'): return <Register/>;
         case ('/configure'): return <Configure/>;
@@ -42,19 +42,18 @@ class App extends React.Component {
 }
 
 const mapState = (state) => ({
-  location: state.location,
+  locationPath: state.location.pathname,
   login: state.login
 });
 
-const mapDispatch = (dispatch) => ({
-  dispatch: dispatch,
-  passiveLogin: () => dispatch(PASSIVE_LOGIN())
+const mapDispatch = ({
+  passiveLogin: PASSIVE_LOGIN
 });
 
 export default connect(mapState, mapDispatch)(App);
 
 App.propTypes = {
-  location: PropTypes.object.isRequired,
+  locationPath: PropTypes.string.isRequired,
   login: PropTypes.object.isRequired,
   passiveLogin: PropTypes.func.isRequired
 };

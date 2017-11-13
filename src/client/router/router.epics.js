@@ -4,12 +4,9 @@ import { routeActions } from './router';
 import { filter } from 'rxjs/operators/filter';
 import { mapTo } from 'rxjs/operators/mapTo';
 import { delay } from 'rxjs/operators/delay';
+import { user, configured } from 'client/app/login/user.selectors';
 
-const authenticated = (store) =>
-  !!store.getState().login.loginRequest.result;
-
-const configured = (store) =>
-  !!Object.keys(store.getState().login.loginRequest.result.studyPlan).length;
+const authenticated = (store) => !!user(store.getState());
 
 const authEpic = (actions$, store) =>
   actions$.ofType('ENTRY', 'LOGIN', 'REGISTER').pipe(
@@ -18,7 +15,7 @@ const authEpic = (actions$, store) =>
   );
 
 const noAuthEpic = (actions$, store) =>
-  actions$.ofType('ENTRY', 'DASHBOARD', 'STUDY_PLAN').pipe(
+  actions$.ofType('ENTRY', 'CONFIGURE', 'DASHBOARD', 'STUDY_PLAN').pipe(
     delay(300),
     filter(() => !authenticated(store)),
     mapTo(routeActions.LOGIN())
@@ -27,7 +24,7 @@ const noAuthEpic = (actions$, store) =>
 const configEpic = (actions$, store) =>
   actions$.ofType('ENTRY', 'LOGIN', 'REGISTER', 'DASHBOARD', 'STUDYPLAN').pipe(
     filter(() => authenticated(store)),
-    filter(() => !configured(store)),
+    filter(() => !configured(store.getState())),
     mapTo(routeActions.CONFIGURE())
   );
 

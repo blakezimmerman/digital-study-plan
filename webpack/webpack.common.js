@@ -35,6 +35,10 @@ exports.commonConfig = {
             }
           }
         ],
+      },
+      {
+        test: /\.(pdf|png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        use: 'file-loader?name=assets/[hash].[ext]'
       }
     ]
   },
