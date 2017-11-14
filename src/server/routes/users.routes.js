@@ -10,7 +10,7 @@ const router = express.Router();
 const checkMatchFound = (result, res) =>
   !result.result.n || result.result.n < 1
     ? res.status(500).json('Could not find a matching object')
-    : res.json(x);
+    : res.json(result);
 
 const processUser = ({userName, password}) =>
   getUser(userName)
@@ -22,25 +22,25 @@ const processUser = ({userName, password}) =>
             hashedPassword: bcrypt.hashSync(password),
             studyPlan: {}
           })
-      : Promise.reject("Username is already taken."))
+      : Promise.reject('Username is already taken'))
     .catch((err) => Promise.reject(err));
 
 router.post('/new', (req, res) => {
   processUser(req.body)
     .then((user) => createUser(user)
       .then((result) => res.json(result))
-      .catch((err) => res.status(500).json({e})))
-    .catch((err) => res.status(500).json({err}))
+      .catch((err) => res.status(500).json('Unable to create account, please try again later')))
+    .catch((err) => res.status(500).json('Sorry, this username is already taken'))
 });
 
 router.post('/:username/updateStudyPlan', (req, res) => {
   const userName = req.params.username;
   jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
     (err || !decoded || decoded.userName !== userName)
-      ? res.status(500).json("Not Authorized")
+      ? res.status(500).json('Not Authorized')
       : updateStudyPlan(userName, req.body)
           .then((result) => checkMatchFound(result, res))
-          .catch((err) => res.status(500).json({err}))
+          .catch((err) => res.status(500).json('Unable to update study plan, please try again later'))
   );
 });
 

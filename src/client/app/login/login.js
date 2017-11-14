@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
+import loginStyles from './login.styles';
 import { LOGIN_REQUEST } from './login.reducer';
 
 class Login extends React.Component {
@@ -28,32 +29,35 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={loginStyles.container}>
         <h2>Sign in</h2>
-        <label>
-          {'User Name '}
-          <input
-            type='text'
-            value={this.state.userNameInput}
-            onChange={this.updateUserName}
-          />
-        </label>
-        <label>
-          {'Password '}
-          <input
-            type='password'
-            value={this.state.passwordInput}
-            onChange={this.updatePassword}
-          />
-        </label>
-        <button
-          onClick={this.loginButton({
-            userName: this.state.userNameInput,
-            password: this.state.passwordInput
-          })}
-        >
-          Log In
-        </button>
+        {this.props.error && <h3 className={loginStyles.error}>{this.props.error}</h3>}
+        <div className={loginStyles.inputs}>
+          <label>
+            {'Username:'}
+            <input
+              type='text'
+              value={this.state.userNameInput}
+              onChange={this.updateUserName}
+            />
+          </label>
+          <label>
+            {'Password:'}
+            <input
+              type='password'
+              value={this.state.passwordInput}
+              onChange={this.updatePassword}
+            />
+          </label>
+          <button
+            onClick={this.loginButton({
+              userName: this.state.userNameInput,
+              password: this.state.passwordInput
+            })}
+          >
+            Log In
+          </button>
+        </div>
         <div>
           {'Not Registered? '}
           <Link to='/register'>Click here to make an account!</Link>
@@ -63,7 +67,7 @@ class Login extends React.Component {
   }
 }
 
-const mapState = (state) => ({ ...state.loginRequest });
+const mapState = (state) => ({ ...state.login.loginRequest });
 
 const mapDispatch = { requestLogin: LOGIN_REQUEST.PENDING };
 
@@ -72,5 +76,6 @@ export default connect(mapState, mapDispatch)(Login);
 Login.PropTypes = {
   pending: PropTypes.bool,
   result: PropTypes.object,
-  error: PropTypes.string
+  error: PropTypes.string,
+  requestLogin: PropTypes.func.isRequired
 };

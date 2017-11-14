@@ -27,13 +27,13 @@ router.post('/login', (req, res) => {
           res.cookie('token', generateToken(resUser), { httpOnly: true, signed: true });
           res.json(resUser);
         } else {
-          res.status(500).json('Incorrect password');
+          res.status(500).json('Incorrect password entered');
         }
       } else {
         res.status(500).json('Username not found');
       }
     })
-    .catch((err) => res.status(500).json({err}));
+    .catch((err) => res.status(500).json('An error occurred during user lookup'));
 });
 
 router.get('/logout', (req, res) => {
@@ -44,7 +44,7 @@ router.get('/logout', (req, res) => {
 router.get('/passivelogin', (req, res) =>
   jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
     (err || !decoded)
-      ? res.json("Not Authorized")
+      ? res.json('Not Authorized')
       : res.json({ userName: decoded.userName, studyPlan: decoded.studyPlan })
   )
 );
