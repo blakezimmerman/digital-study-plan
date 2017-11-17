@@ -6,8 +6,8 @@ import loginStyles from './login.styles';
 import { REGISTER_REQUEST } from './login.reducer';
 
 class Register extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       userNameInput: '',
       passwordInput: ''

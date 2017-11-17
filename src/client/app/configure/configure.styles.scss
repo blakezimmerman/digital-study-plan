@@ -1,0 +1,77 @@
+@import '../app.styles';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.saveButton {
+  color: white;
+  background-color: #4286f4;
+  font-size: 1rem;
+  font-weight: 300;
+  text-align: center;
+  width: 50%;
+  padding: 0.7rem 0.9rem;
+  display: block;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem 1.5rem;
+
+  &:hover {
+    background-color: #3b78db
+  }
+
+  &:disabled {
+    color: #555;
+    background-color: #aaa;
+  }
+}
+
+.allLists {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.allProgs {
+  width: 100%;
+}
+
+.yourProgs {
+  width: 100%;
+}
+
+.listContainer {
+  margin: 1rem 1.5rem;
+  border: 1px solid darkgray;
+}
+
+.listTitle {
+  color: white;
+  background-color: $stevens-red;
+  font-weight: 300;
+  font-size: 1.3rem;
+  padding: 0.8rem 1rem;
+  margin: 0;
+}
+
+.listBody {
+  min-height: 20vh;
+  padding: 0.5rem 1rem;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.actionButton {
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  border: none;
+  i { font-size: 1.6rem; }
+}

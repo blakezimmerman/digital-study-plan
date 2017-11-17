@@ -1,14 +1,14 @@
 export const emptyPlan = {
   programs: {
-    major: undefined,
-    minor: undefined
+    majors: [],
+    minors: []
   },
   semesters: []
 };
 
 export const majors = [
   {
-    program: 'Software Engineering',
+    name: 'Software Engineering',
     type: 'Major',
     semesters: [
       [],
@@ -22,7 +22,7 @@ export const majors = [
     ]
   },
   {
-    program: 'Mechanical Engineering',
+    name: 'Mechanical Engineering',
     type: 'Major',
     semesters: [
       [],
@@ -39,7 +39,7 @@ export const majors = [
 
 export const minors = [
   {
-    program: 'Computer Science',
+    name: 'Computer Science',
     type: 'Minor',
     courses:
       [

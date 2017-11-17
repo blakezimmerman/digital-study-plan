@@ -6,8 +6,8 @@ import { user } from '../login/user.selectors';
 import { routeActions } from 'client/router/router';
 
 class AccountMenu extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       menuCollapsed: true
     }
@@ -31,7 +31,6 @@ class AccountMenu extends React.Component {
 
   render() {
     return (
-      !this.props.user ? <div></div> :
       <div className={headerStyles.accountMenu} onBlur={this.closeMenu}>
         <button className={headerStyles.menuButton} onClick={this.toggleMenu}>
           <i className={`material-icons ${headerStyles.accountIcon}`}>account_circle</i>
@@ -52,16 +51,11 @@ class AccountMenu extends React.Component {
   }
 }
 
-const mapState = (state) => ({
-  locationPath: state.location.pathname,
-  user: user(state)
-});
-
 const mapDispatch = ({
   toConfigure: routeActions.CONFIGURE
 })
 
-export default connect(mapState, mapDispatch)(AccountMenu);
+export default connect(null, mapDispatch)(AccountMenu);
 
 AccountMenu.PropTypes = {
   locationPath: PropTypes.string.isRequired,

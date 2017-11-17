@@ -4,5 +4,5 @@ export const user = (state) => state.login.loginRequest.result;
 
 export const configured = createSelector(
   user,
-  (user) => !!Object.keys(user.studyPlan).length
+  (user) => !!user && !!Object.keys(user.studyPlan).length
 );
