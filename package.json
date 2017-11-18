@@ -25,7 +25,7 @@
     "redux-first-router": "0.0.16-next",
     "redux-first-router-link": "^1.4.2",
     "redux-logger": "^3.0.6",
-    "redux-observable": "^0.16.0",
+    "redux-observable": "^0.17.0",
     "reselect": "^3.0.1",
     "rxjs": "^5.5.2"
   },

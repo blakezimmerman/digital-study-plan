@@ -3,9 +3,7 @@ import { getType } from 'client/shared/reduxUtils';
 import { api, get, post } from 'client/shared/apiUtils';
 import { CONFIG_SUBMIT_PLAN } from './configure.reducer';
 import { LOGIN_REQUEST } from '../login/login.reducer';
-import { routeActions } from 'client/router/router';
 import { user } from '../login/user.selectors';
-import { mapTo } from 'rxjs/operators/mapTo';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 
