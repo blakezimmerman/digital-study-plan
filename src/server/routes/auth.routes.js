@@ -49,4 +49,22 @@ router.get('/passivelogin', (req, res) =>
   )
 );
 
+router.get('/refresh', (req, res) =>
+  jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
+  (err || !decoded)
+    ? res.json('Not Authorized')
+    : findUser(decoded.userName)
+        .then((user) => {
+          if (user) {
+            const resUser = { userName: user.userName, studyPlan: user.studyPlan };
+            res.cookie('token', generateToken(resUser), { httpOnly: true, signed: true });
+            res.json(resUser);
+          } else {
+            res.status(500).json('Username not found');
+          }
+        })
+        .catch((err) => res.status(500).json('An error occurred during user lookup'))
+  )
+);
+
 module.exports = router;

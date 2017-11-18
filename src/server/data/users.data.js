@@ -7,10 +7,10 @@ exports.createUser = (user) =>
 
 exports.getUser = (userName) =>
   usersCollection()
-    .then((x) => x.find({userName: userName}).toArray())
+    .then((x) => x.find({userName}).toArray())
     .catch((err) => Promise.reject(e))
 
 exports.updateStudyPlan = (userName, studyPlan) =>
   usersCollection()
-    .then((x) => x.updateOne({userName: userName}, {$set: { studyPlan }}))
+    .then((x) => x.updateOne({userName}, {$set: { studyPlan }}))
     .catch((err) => Promise.reject(err));

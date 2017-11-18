@@ -1,8 +1,8 @@
 import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
-import { api, post } from 'client/shared/apiUtils';
+import { api, get, post } from 'client/shared/apiUtils';
 import { CONFIG_SUBMIT_PLAN } from './configure.reducer';
-import { PASSIVE_LOGIN } from '../login/login.reducer';
+import { LOGIN_REQUEST } from '../login/login.reducer';
 import { routeActions } from 'client/router/router';
 import { user } from '../login/user.selectors';
 import { mapTo } from 'rxjs/operators/mapTo';
@@ -21,7 +21,9 @@ const submitPlanEpic = (actions$, store) =>
 
 const submitSuccessEpic = (actions$) =>
   actions$.ofType(getType(CONFIG_SUBMIT_PLAN.SUCCESS)).pipe(
-    mapTo(PASSIVE_LOGIN())
+    switchMap((action) =>
+      get(api('auth/refresh'), LOGIN_REQUEST)
+    )
   );
 
 export const configureEpic = combineEpics(

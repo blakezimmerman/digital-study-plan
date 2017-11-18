@@ -11,7 +11,7 @@ export const post = (url, body, action) =>
 
 export const get = (url, action) =>
   axios.get(url)
-    .then((response) => action.SUCCESS(response))
+    .then((response) => action.SUCCESS(response.data))
     .catch((err) => action.FAILURE(err.response.data));
 
 export const passiveLogin = (action) =>

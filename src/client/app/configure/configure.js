@@ -1,4 +1,5 @@
 import * as React from 'react';
+import store from 'client/store/createStore';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import configureStyles from './configure.styles';
@@ -33,6 +34,9 @@ class Configure extends React.Component {
   render() {
     return (
       <div className={configureStyles.container}>
+        {this.props.submitReq.error &&
+          <h3 className={configureStyles.error}>{this.props.submitReq.error}</h3>
+        }
         <button
           className={configureStyles.saveButton}
           disabled={!this.props.programs.majors.length}
@@ -78,7 +82,8 @@ class Configure extends React.Component {
 const mapState = (state) => ({
   user: user(state),
   configured: configured(state),
-  programs: state.configure.studyPlan.programs
+  programs: state.configure.studyPlan.programs,
+  submitReq: state.configure.configSubmitReq
 });
 
 const mapDispatch = ({
