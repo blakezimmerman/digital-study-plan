@@ -20,7 +20,6 @@ module.exports = webpackMerge(commonConfig, {
         test: /\.scss$/,
         include : this.SRC,
         use: ExtractTextPlugin.extract({
-          //'css-loader?modules', 'sass-loader'
           use: [
             { loader: 'css-loader', options: { modules: 1, importLoaders: 1 } },
             { loader: 'sass-loader' }
