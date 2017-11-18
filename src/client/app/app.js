@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import appStyles from './app.styles';
 import { routeActions } from '../router/router';
 import { PASSIVE_LOGIN } from './login/login.reducer';
-import { user, configured } from './login/user.selectors';
+import { user, authenticated, configured } from './login/user.selectors';
 import Header from './header/header';
 import Login from './login/login';
 import Register from './login/register';
@@ -22,26 +22,26 @@ class App extends React.Component {
   }
 
   render() {
-    const getPage = () => {
-      const authenticated = !!this.props.user
-      const configured = !!(this.props.user && this.props.configured);
+    const { locationPath, user, authenticated, configured } = this.props;
 
-      switch (this.props.locationPath) {
+    const getPage = () => {
+      switch (locationPath) {
         case ('/login'): return <Login/>;
         case ('/register'): return <Register/>;
         case ('/configure'): return authenticated && <Configure/>;
         case ('/dashboard'): return configured && <Dashboard/>;
         case ('/studyplan'): return configured && <StudyPlan/>;
-        default: return <Dashboard/>;
+      default: return authenticated ? <Dashboard/> : <Login/>;
       }
     };
 
     return (
       <div>
         <Header
-          locationPath={this.props.locationPath}
-          user={this.props.user}
-          configured={this.props.configured}
+          locationPath={locationPath}
+          user={user}
+          authenticated={authenticated}
+          configured={configured}
         />
         {getPage()}
       </div>
@@ -51,8 +51,8 @@ class App extends React.Component {
 
 const mapState = (state) => ({
   locationPath: state.location.pathname,
-  login: state.login,
   user: user(state),
+  authenticated: authenticated(state),
   configured: configured(state)
 });
 
@@ -64,8 +64,8 @@ export default connect(mapState, mapDispatch)(App);
 
 App.propTypes = {
   locationPath: PropTypes.string.isRequired,
-  login: PropTypes.object.isRequired,
   user: PropTypes.object,
+  authenticated: PropTypes.bool.isRequired,
   configured: PropTypes.bool.isRequired,
   passiveLogin: PropTypes.func.isRequired
 };

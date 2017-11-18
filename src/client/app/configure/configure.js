@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import configureStyles from './configure.styles';
 import { user, configured } from '../login/user.selectors';
-import { emptyPlan, majors, minors } from 'client/shared/studyPlans';
+import { majors, minors } from 'client/shared/studyPlans';
+import { CONFIG_INIT_PLAN, CONFIG_SUBMIT_PLAN, ADD_PROGRAM, REMOVE_PROGRAM } from './configure.reducer';
 import ProgramList from './programList';
 
 class Configure extends React.Component {
@@ -11,12 +12,31 @@ class Configure extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    if (this.props.configured) {
+      this.props.initPlan(this.props.user.studyPlan);
+    }
+  }
+
+  addProgram = (program) => () => {
+    this.props.addProgram(program);
+  };
+
+  removeProgram = (program) => () => {
+    this.props.removeProgram(program);
+  };
+
+  updateAccount = () => {
+    this.props.submitPlan();
+  };
+
   render() {
     return (
       <div className={configureStyles.container}>
         <button
           className={configureStyles.saveButton}
-          disabled={!this.props.configured}
+          disabled={!this.props.programs.majors.length}
+          onClick={this.updateAccount}
         >
           Update Account & Go To Dashboard
         </button>
@@ -25,28 +45,28 @@ class Configure extends React.Component {
             <ProgramList
               programs={majors}
               title='Available Majors'
+              add={true}
+              callback={this.addProgram}
             />
             <ProgramList
               programs={minors}
               title='Available Minors'
+              add={true}
+              callback={this.addProgram}
             />
           </div>
           <div className={configureStyles.yourProgs}>
             <ProgramList
-              programs={
-                this.props.configured
-                  ? this.props.user.studyPlan.programs.majors
-                  : []
-              }
+              programs={this.props.programs.majors}
               title='Your Majors'
+              add={false}
+              callback={this.removeProgram}
             />
             <ProgramList
-              programs={
-                this.props.configured
-                  ? this.props.user.studyPlan.programs.minors
-                  : []
-              }
+              programs={this.props.programs.minors}
               title='Your Minors'
+              add={false}
+              callback={this.removeProgram}
             />
           </div>
         </div>
@@ -57,11 +77,15 @@ class Configure extends React.Component {
 
 const mapState = (state) => ({
   user: user(state),
-  configured: configured(state)
+  configured: configured(state),
+  programs: state.configure.studyPlan.programs
 });
 
 const mapDispatch = ({
-
+  initPlan: CONFIG_INIT_PLAN,
+  submitPlan: CONFIG_SUBMIT_PLAN.PENDING,
+  addProgram: ADD_PROGRAM,
+  removeProgram: REMOVE_PROGRAM
 });
 
 export default connect(mapState, mapDispatch)(Configure);

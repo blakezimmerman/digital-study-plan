@@ -19,6 +19,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin: 1rem 1.5rem;
+  transition: 0.3s;
 
   &:hover {
     background-color: #3b78db
@@ -74,4 +75,15 @@
   cursor: pointer;
   border: none;
   i { font-size: 1.6rem; }
+}
+
+.add { color: green; }
+
+.remove { color: red; }
+
+.noneText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
 }

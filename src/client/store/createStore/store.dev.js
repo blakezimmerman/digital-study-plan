@@ -16,6 +16,10 @@ if (module.hot) {
   module.hot.accept('../rootReducer', () =>
     store.replaceReducer(require('../rootReducer').default)
   );
+
+  module.hot.accept('../rootEpic', () =>
+    epicMiddleware.replaceEpic(require('../rootReducer').default)
+  );
 }
 
 export default store;

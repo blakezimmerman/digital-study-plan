@@ -4,20 +4,20 @@ import { api, post, passiveLogin } from 'client/shared/apiUtils';
 import { PASSIVE_LOGIN, LOGIN_REQUEST, REGISTER_REQUEST } from './login.reducer';
 import { routeActions } from 'client/router/router';
 import { mapTo } from 'rxjs/operators/mapTo';
-import { mergeMap } from 'rxjs/operators/mergeMap';
+import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 
 const passiveLoginEpic = (actions$) =>
   actions$.ofType(getType(PASSIVE_LOGIN)).pipe(
-    mergeMap((action) =>
+    switchMap((action) =>
       passiveLogin(LOGIN_REQUEST)
     )
   );
 
 const loginRequestEpic = (actions$) =>
   actions$.ofType(getType(LOGIN_REQUEST.PENDING)).pipe(
-    debounceTime(500),
-    mergeMap((action) =>
+    debounceTime(300),
+    switchMap((action) =>
       post(api('auth/login'), action.payload, LOGIN_REQUEST)
     )
   );
@@ -25,7 +25,7 @@ const loginRequestEpic = (actions$) =>
 const registerRequestEpic = (actions$) =>
   actions$.ofType(getType(REGISTER_REQUEST.PENDING)).pipe(
     debounceTime(500),
-    mergeMap((action) =>
+    switchMap((action) =>
       post(api('users/new'), action.payload, REGISTER_REQUEST)
     )
   );

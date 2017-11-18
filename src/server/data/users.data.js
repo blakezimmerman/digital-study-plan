@@ -12,5 +12,5 @@ exports.getUser = (userName) =>
 
 exports.updateStudyPlan = (userName, studyPlan) =>
   usersCollection()
-    .then((x) => x.updateOne({userName: userName}, studyPlan))
+    .then((x) => x.updateOne({userName: userName}, {$set: { studyPlan }}))
     .catch((err) => Promise.reject(err));

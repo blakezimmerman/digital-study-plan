@@ -7,14 +7,21 @@ const ProgramList = (props) => (
   <div className={configureStyles.listContainer}>
     <h2 className={configureStyles.listTitle}>{props.title}</h2>
     <div className={configureStyles.listBody}>
-      {props.programs.map((program, i) =>
-        <div key={i} className={configureStyles.listItem}>
-          {program.name}
-          <button className={configureStyles.actionButton}>
-            <i className='material-icons'>add_circle</i>
-          </button>
-        </div>
-       )
+      {props.programs.length ?
+        props.programs.map((program, i) =>
+          <div key={i} className={configureStyles.listItem}>
+            {program.name}
+            <button
+              className={configureStyles.actionButton}
+              onClick={props.callback(program)}
+            >
+              <i className={`material-icons ${props.add ? configureStyles.add : configureStyles.remove}`}>
+                {props.add ? 'add_circle' : 'remove_circle'}
+              </i>
+            </button>
+          </div>
+        )
+        : <div className={configureStyles.noneText}>None Added Yet</div>
       }
     </div>
   </div>

@@ -4,11 +4,8 @@ import headerStyles from './header.styles';
 import logo from 'client/assets/StevensLogo.png';
 import AccountMenu from './accoutMenu';
 
-const getTitle = (props) => {
-  const authenticated = !!props.user;
-  const configured = !!(props.user && props.configured);
-
-  switch (props.locationPath) {
+const getTitle = ({ locationPath, authenticated, configured }) => {
+  switch (locationPath) {
     case ('/login' || '/register'): return 'Digital Study Plan';
     case ('/configure'): return authenticated && 'Configure Account';
     case ('/dashboard'): return configured && 'Dashboard';
