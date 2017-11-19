@@ -56,9 +56,7 @@ const mapState = (state) => ({
   configured: configured(state)
 });
 
-const mapDispatch = ({
-  passiveLogin: PASSIVE_LOGIN
-});
+const mapDispatch = { passiveLogin: PASSIVE_LOGIN };
 
 export default connect(mapState, mapDispatch)(App);
 

@@ -86,12 +86,12 @@ const mapState = (state) => ({
   submitReq: state.configure.configSubmitReq
 });
 
-const mapDispatch = ({
+const mapDispatch = {
   initPlan: CONFIG_INIT_PLAN,
   submitPlan: CONFIG_SUBMIT_PLAN.PENDING,
   addProgram: ADD_PROGRAM,
   removeProgram: REMOVE_PROGRAM
-});
+};
 
 export default connect(mapState, mapDispatch)(Configure);
 

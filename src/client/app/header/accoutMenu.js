@@ -25,7 +25,9 @@ class AccountMenu extends React.Component {
     }))
   };
 
-  toAccount = () => this.props.toConfigure();
+  toDashboard = () => this.props.dashboardRoute();
+
+  toAccount = () => this.props.configureRoute();
 
   logout = () => location.href = 'api/auth/logout';
 
@@ -41,6 +43,9 @@ class AccountMenu extends React.Component {
           }
         </button>
         <div className={`${headerStyles.dropdown} ${!this.state.menuCollapsed && headerStyles.show}`}>
+          {this.props.locationPath !== '/dashboard' &&
+            <button onMouseDown={this.toDashboard}>Dashboard</button>
+          }
           {this.props.locationPath !== '/configure' &&
             <button onMouseDown={this.toAccount}>Account</button>
           }
@@ -51,9 +56,10 @@ class AccountMenu extends React.Component {
   }
 }
 
-const mapDispatch = ({
-  toConfigure: routeActions.CONFIGURE
-})
+const mapDispatch = {
+  dashboardRoute: routeActions.DASHBOARD,
+  configureRoute: routeActions.CONFIGURE
+};
 
 export default connect(null, mapDispatch)(AccountMenu);
 
