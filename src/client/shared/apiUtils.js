@@ -14,8 +14,8 @@ export const get = (url, action) =>
     .then((response) => action.SUCCESS(response.data))
     .catch((err) => action.FAILURE(err.response.data));
 
-export const passiveLogin = (action) =>
-  axios.get(api('auth/passivelogin'))
+export const refreshSession = (action) =>
+  axios.get(api('auth/refresh'))
     .then((response) => response.data !== 'Not Authorized'
       ? action.SUCCESS(response.data)
       : action.FAILURE(undefined)

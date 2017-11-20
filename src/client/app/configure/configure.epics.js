@@ -2,10 +2,11 @@ import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
 import { api, get, post } from 'client/shared/apiUtils';
 import { CONFIG_SUBMIT_PLAN } from './configure.reducer';
-import { LOGIN_REQUEST } from '../login/login.reducer';
+import { REFRESH_SESSION } from '../login/login.reducer';
 import { user } from '../login/user.selectors';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
+import { mapTo } from 'rxjs/operators/mapTo';
 
 const submitPlanEpic = (actions$, store) =>
   actions$.ofType(getType(CONFIG_SUBMIT_PLAN.PENDING)).pipe(
@@ -19,9 +20,7 @@ const submitPlanEpic = (actions$, store) =>
 
 const submitSuccessEpic = (actions$) =>
   actions$.ofType(getType(CONFIG_SUBMIT_PLAN.SUCCESS)).pipe(
-    switchMap((action) =>
-      get(api('auth/refresh'), LOGIN_REQUEST)
-    )
+    mapTo(REFRESH_SESSION())
   );
 
 export const configureEpic = combineEpics(

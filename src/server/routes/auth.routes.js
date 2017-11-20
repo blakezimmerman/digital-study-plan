@@ -15,8 +15,8 @@ const findUser = (userName) =>
 const checkPassword = (hash, password) =>
   bcrypt.compareSync(password, hash);
 
-const generateToken = (resUser) =>
-  jwt.sign({ userName: resUser.userName, studyPlan: resUser.studyPlan }, secret);
+const generateToken = (user) =>
+  jwt.sign({ userName: user.userName }, secret);
 
 router.post('/login', (req, res) => {
   findUser(req.body.userName)
@@ -24,7 +24,7 @@ router.post('/login', (req, res) => {
       if (user) {
         if (checkPassword(user.hashedPassword, req.body.password)) {
           const resUser = { userName: user.userName, studyPlan: user.studyPlan };
-          res.cookie('token', generateToken(resUser), { httpOnly: true, signed: true });
+          res.cookie('token', generateToken(user), { httpOnly: true, signed: true });
           res.json(resUser);
         } else {
           res.status(500).json('Incorrect password entered');
@@ -41,14 +41,6 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/passivelogin', (req, res) =>
-  jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
-    (err || !decoded)
-      ? res.json('Not Authorized')
-      : res.json({ userName: decoded.userName, studyPlan: decoded.studyPlan })
-  )
-);
-
 router.get('/refresh', (req, res) =>
   jwt.verify(req.signedCookies.token, secret, (err, decoded) =>
   (err || !decoded)
@@ -57,13 +49,12 @@ router.get('/refresh', (req, res) =>
         .then((user) => {
           if (user) {
             const resUser = { userName: user.userName, studyPlan: user.studyPlan };
-            res.cookie('token', generateToken(resUser), { httpOnly: true, signed: true });
             res.json(resUser);
           } else {
-            res.status(500).json('Username not found');
+            res.redirect('/api/auth/logout');
           }
         })
-        .catch((err) => res.status(500).json('An error occurred during user lookup'))
+        .catch((err) => res.redirect('/api/auth/logout'))
   )
 );
 

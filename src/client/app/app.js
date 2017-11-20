@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import appStyles from './app.styles';
 import { routeActions } from '../router/router';
-import { PASSIVE_LOGIN } from './login/login.reducer';
+import { REFRESH_SESSION } from './login/login.reducer';
 import { user, authenticated, configured } from './login/user.selectors';
 import Header from './header/header';
 import Login from './login/login';
@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    return this.props.passiveLogin();
+    return this.props.refreshSession();
   }
 
   render() {
@@ -56,7 +56,7 @@ const mapState = (state) => ({
   configured: configured(state)
 });
 
-const mapDispatch = { passiveLogin: PASSIVE_LOGIN };
+const mapDispatch = { refreshSession: REFRESH_SESSION };
 
 export default connect(mapState, mapDispatch)(App);
 
@@ -65,5 +65,5 @@ App.propTypes = {
   user: PropTypes.object,
   authenticated: PropTypes.bool.isRequired,
   configured: PropTypes.bool.isRequired,
-  passiveLogin: PropTypes.func.isRequired
+  refreshSession: PropTypes.func.isRequired
 };

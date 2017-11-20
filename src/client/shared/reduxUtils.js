@@ -5,7 +5,8 @@ export const actionCreator = (type) => (payload) => ({ type, payload });
 export const asyncActionCreator = (type) => ({
   PENDING: actionCreator(type + '_PENDING'),
   SUCCESS: actionCreator(type + '_SUCCESS'),
-  FAILURE: actionCreator(type + '_FAILURE')
+  FAILURE: actionCreator(type + '_FAILURE'),
+  RESET: actionCreator(type + '_RESET')
 });
 
 export const getType = (action) => action().type;
@@ -37,6 +38,8 @@ export const asyncReducer = (asyncAction) =>
           pending: false,
           error: action.payload
         };
+      case (getType(asyncAction.RESET)):
+        return asyncInitialState;
       default:
         return state;
     }
