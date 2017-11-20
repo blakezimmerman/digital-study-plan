@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import headerStyles from './header.styles';
-import { user } from '../login/user.selectors';
+import styles from './header.styles';
 import { routeActions } from 'client/router/router';
 
 class AccountMenu extends React.Component {
@@ -33,16 +32,16 @@ class AccountMenu extends React.Component {
 
   render() {
     return (
-      <div className={headerStyles.accountMenu} onBlur={this.closeMenu}>
-        <button className={headerStyles.menuButton} onClick={this.toggleMenu}>
-          <i className={`material-icons ${headerStyles.accountIcon}`}>account_circle</i>
-          <p className={headerStyles.userName}>{this.props.user.userName}</p>
+      <div className={styles.accountMenu} onBlur={this.closeMenu}>
+        <button className={styles.menuButton} onClick={this.toggleMenu}>
+          <i className={`material-icons ${styles.accountIcon}`}>account_circle</i>
+          <p className={styles.userName}>{this.props.user.userName}</p>
           {this.state.menuCollapsed
             ? <i className='material-icons'>expand_more</i>
             : <i className='material-icons'>expand_less</i>
           }
         </button>
-        <div className={`${headerStyles.dropdown} ${!this.state.menuCollapsed && headerStyles.show}`}>
+        <div className={`${styles.dropdown} ${!this.state.menuCollapsed && styles.show}`}>
           {this.props.locationPath !== '/dashboard' &&
             <button onMouseDown={this.toDashboard}>Dashboard</button>
           }

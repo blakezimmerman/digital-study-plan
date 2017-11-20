@@ -1,8 +1,7 @@
 import * as React from 'react';
-import store from 'client/store/createStore';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import configureStyles from './configure.styles';
+import styles from './configure.styles';
 import { user, configured } from '../login/user.selectors';
 import { majors, minors } from 'client/shared/studyPlans';
 import { CONFIG_INIT_PLAN, CONFIG_SUBMIT_PLAN, ADD_PROGRAM, REMOVE_PROGRAM } from './configure.reducer';
@@ -33,19 +32,19 @@ class Configure extends React.Component {
 
   render() {
     return (
-      <div className={configureStyles.container}>
+      <div className={styles.container}>
         {this.props.submitReq.error &&
-          <h3 className={configureStyles.error}>{this.props.submitReq.error}</h3>
+          <h3 className={styles.error}>{this.props.submitReq.error}</h3>
         }
         <button
-          className={configureStyles.saveButton}
+          className={styles.saveButton}
           disabled={!this.props.programs.majors.length}
           onClick={this.updateAccount}
         >
           Update Account & Go To Dashboard
         </button>
-        <div className={configureStyles.allLists}>
-          <div className={configureStyles.allProgs}>
+        <div className={styles.allLists}>
+          <div className={styles.allProgs}>
             <ProgramList
               programs={majors}
               title='Available Majors'
@@ -59,7 +58,7 @@ class Configure extends React.Component {
               callback={this.addProgram}
             />
           </div>
-          <div className={configureStyles.yourProgs}>
+          <div className={styles.yourProgs}>
             <ProgramList
               programs={this.props.programs.majors}
               title='Your Majors'

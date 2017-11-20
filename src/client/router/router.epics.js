@@ -1,10 +1,9 @@
 import { combineEpics } from 'redux-observable';
-import { getType } from 'client/shared/reduxUtils';
 import { routeActions } from './router';
 import { filter } from 'rxjs/operators/filter';
 import { mapTo } from 'rxjs/operators/mapTo';
 import { delay } from 'rxjs/operators/delay';
-import { user, authenticated, configured } from 'client/app/login/user.selectors';
+import { authenticated, configured } from 'client/app/login/user.selectors';
 
 const authEpic = (actions$, store) =>
   actions$.ofType('ENTRY', 'LOGIN', 'REGISTER').pipe(

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
-import loginStyles from './login.styles';
+import styles from './login.styles';
 import { REGISTER_REQUEST } from './login.reducer';
 
 class Register extends React.Component {
@@ -29,18 +29,18 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div className={loginStyles.container}>
+      <div className={styles.container}>
         <h2>Create an Account</h2>
         {this.props.error && !this.props.result &&
-          <h3 className={loginStyles.error}>{this.props.error}</h3>
+          <h3 className={styles.error}>{this.props.error}</h3>
         }
         {this.props.result && !this.props.error &&
-          <h3 className={loginStyles.success}>
+          <h3 className={styles.success}>
             {'Registration Success! '}
             <Link to='/login'>Click here to proceed to login.</Link>
           </h3>
         }
-        <div className={loginStyles.inputs}>
+        <div className={styles.inputs}>
           <label>
             {'Username '}
             <input

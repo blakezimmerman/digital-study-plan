@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
-import loginStyles from './login.styles';
+import styles from './login.styles';
 import { LOGIN_REQUEST } from './login.reducer';
 
 class Login extends React.Component {
@@ -29,10 +29,10 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className={loginStyles.container}>
+      <div className={styles.container}>
         <h2>Sign in</h2>
-        {this.props.error && <h3 className={loginStyles.error}>{this.props.error}</h3>}
-        <div className={loginStyles.inputs}>
+        {this.props.error && <h3 className={styles.error}>{this.props.error}</h3>}
+        <div className={styles.inputs}>
           <label>
             {'Username:'}
             <input

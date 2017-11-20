@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
-import { api, get, post } from 'client/shared/apiUtils';
+import { api, post } from 'client/shared/apiUtils';
 import { CONFIG_SUBMIT_PLAN } from './configure.reducer';
 import { REFRESH_SESSION } from '../login/login.reducer';
 import { user } from '../login/user.selectors';

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import appStyles from './app.styles';
-import { routeActions } from '../router/router';
 import { REFRESH_SESSION } from './login/login.reducer';
 import { user, authenticated, configured } from './login/user.selectors';
 import Header from './header/header';

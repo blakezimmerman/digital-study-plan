@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import dashboardStyles from './dashboard.styles';
-import { user, configured } from '../login/user.selectors';
+import styles from './dashboard.styles';
+import { user } from '../login/user.selectors';
 import { routeActions } from '../../router/router';
 
 class Dashboard extends React.Component {
@@ -14,9 +14,9 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className={dashboardStyles.container}>
+      <div className={styles.container}>
         <button
-          className={dashboardStyles.manageButton}
+          className={styles.manageButton}
           onClick={this.toStudyPlan}
         >
           Manage Study Plan

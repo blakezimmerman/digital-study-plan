@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import headerStyles from './header.styles';
+import styles from './header.styles';
 import logo from 'client/assets/StevensLogo.png';
 import AccountMenu from './accoutMenu';
 
@@ -15,9 +15,9 @@ const getTitle = ({ locationPath, authenticated, configured }) => {
 };
 
 const Header = (props) => (
-  <div className={headerStyles.container}>
-    <img src={logo} className={headerStyles.logo} alt='Stevens Logo'/>
-    <h1 className={headerStyles.h1}>{getTitle(props)}</h1>
+  <div className={styles.container}>
+    <img src={logo} className={styles.logo} alt='Stevens Logo'/>
+    <h1 className={styles.h1}>{getTitle(props)}</h1>
     {props.user ? <AccountMenu {...props}/>: <div></div>}
   </div>
 );
