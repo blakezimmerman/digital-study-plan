@@ -14,14 +14,16 @@ class StudyPlan extends React.Component {
   }
 
   componentDidMount() {
-    this.props.initPlan(this.props.user.studyPlan);
+    this.props.initPlan(this.props.user.studyPlan.plan);
   }
 
-  handleReset = () => this.props.resetPlan(this.props.user.studyPlan);
+  handleReset = () => this.props.resetPlan(this.props.user.studyPlan.programs);
 
   handleSave = () => this.props.savePlan();
 
   newSemester = () => this.props.addSemester();
+
+  newCourse = () => {};
 
   onDragEnd(result) {
     if (!result.destination) {
@@ -67,7 +69,7 @@ class StudyPlan extends React.Component {
                   )}
                 </Column>
               )}
-              <Column title='Additional Courses'>
+              <Column title='Additional Courses' add={this.newCourse}>
                 Additional Courses
               </Column>
             </div>
@@ -95,8 +97,9 @@ class StudyPlan extends React.Component {
 
 const mapState = (state) => ({
   user: user(state),
-  majors: state.manage.studyPlan.programs.majors,
-  minors: state.manage.studyPlan.programs.minors,
+  majors: state.manage.studyPlan.majors,
+  minors: state.manage.studyPlan.minors,
+  additional: state.manage.studyPlan.additional,
   semesters: state.manage.studyPlan.semesters
 });
 

@@ -1,9 +1,14 @@
-export const emptyPlan = {
+export const emptyStudyPlan = {
   programs: {
     majors: [],
     minors: []
   },
-  semesters: []
+  plan: {
+    majors: [],
+    minors: [],
+    additional: [],
+    semesters: []
+  }
 };
 
 export const majors = [
