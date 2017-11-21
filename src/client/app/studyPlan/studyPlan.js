@@ -29,6 +29,7 @@ class StudyPlan extends React.Component {
     if (!result.destination) {
       return;
     }
+    return;
   }
 
   render() {
@@ -51,17 +52,37 @@ class StudyPlan extends React.Component {
           </div>
           <div className={styles.columnGroup}>
             <div className={styles.half}>
+
+              {/* MAJOR */}
               {this.props.majors.map((major, mIndex) =>
                 <Column title={major.name} key={mIndex}>
                   {major.semesters.map((semester, sIndex) =>
-                    <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
-                      {semester.map((course, cIndex) =>
-                        <Course course={course} key={cIndex}/>
+                    <Droppable droppableId={major.name + sIndex + 'drop'} key={sIndex}>
+                      {(provided, snapshot) => (
+                        <div ref={provided.innerRef}>
+                          <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
+                            {semester.map((course, cIndex) =>
+                              <Draggable draggableId={course.name + mIndex + sIndex + cIndex} key={cIndex}>
+                                {(provided, snapshot) => (
+                                  <div>
+                                    <div ref={provided.innerRef} {...provided.dragHandleProps} style={provided.draggableStyle}>
+                                      <Course course={course} key={cIndex}/>
+                                    </div>
+                                    {provided.placeholder}
+                                  </div>
+                                )}
+                              </Draggable>
+                            )}
+                          </Column>
+                          {provided.placeholder}
+                        </div>
                       )}
-                    </Column>
+                    </Droppable>
                   )}
                 </Column>
               )}
+
+              {/* MINOR */}
               {this.props.minors.map((minor, mIndex) =>
                 <Column title={minor.name} key={mIndex}>
                   {minor.courses.map((course, cIndex) =>
@@ -69,24 +90,37 @@ class StudyPlan extends React.Component {
                   )}
                 </Column>
               )}
+
+              {/* ADDITIONAL */}
               <Column title='Additional Courses' add={this.newCourse}>
                 Additional Courses
               </Column>
+
             </div>
             <div className={styles.half}>
+
+              {/* STUDY PLAN */}
               <Column
                 title='Study Plan'
                 main={true}
                 add={this.newSemester}
               >
                 {this.props.semesters.map((semester, sIndex) =>
-                  <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
-                    {semester.map((course, cIndex) =>
-                      <Course course={course} key={cIndex}/>
+                  <Droppable droppableId={sIndex + 'drop'} key={sIndex}>
+                    {(provided, snapshot) => (
+                      <div ref={provided.innerRef}>
+                        <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
+                          {semester.map((course, cIndex) =>
+                            <Course course={course} key={cIndex}/>
+                          )}
+                        </Column>
+                        {provided.placeholder}
+                      </div>
                     )}
-                  </Column>
+                  </Droppable>
                 )}
               </Column>
+
             </div>
           </div>
         </div>
@@ -106,10 +140,20 @@ const mapState = (state) => ({
 const mapDispatch = {
   initPlan: INIT_STUDY_PLAN,
   resetPlan: RESET_PLAN,
-  savePlan: SAVE_PLAN,
+  savePlan: SAVE_PLAN.PENDING,
   addSemester: ADD_SEMESTER
 };
 
 export default connect(mapState, mapDispatch)(StudyPlan);
 
-StudyPlan.PropTypes = {};
+StudyPlan.PropTypes = {
+  user: PropTypes.object.isRequired,
+  majors: PropTypes.object.isRequired,
+  minors: PropTypes.object.isRequired,
+  additional: PropTypes.object.isRequired,
+  semesters: PropTypes.object.isRequired,
+  initPlan: PropTypes.func.isRequired,
+  resetPlan: PropTypes.func.isRequired,
+  savePlan: PropTypes.func.isRequired,
+  addSemester: PropTypes.func.isRequired
+};
