@@ -1,0 +1,119 @@
+@import '../app.styles';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  color: white;
+  font-size: 1rem;
+  font-weight: 300;
+  text-align: center;
+  width: 30%;
+  padding: 0.7rem 0.9rem;
+  display: block;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem 1.5rem;
+  transition: 0.3s;
+}
+
+.reset {
+  background-color: #cc0000;
+
+  &:hover {
+    background-color: #b30000;
+  }
+}
+
+.save {
+  background-color: #4286f4;
+
+  &:hover {
+    background-color: #3b78db
+  }
+}
+
+.columnGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.half {
+  width: 50%;
+  padding: 1rem;
+}
+
+@mixin column() {
+  border: 1px solid $stevens-gray;
+  margin-bottom: 1rem;
+  max-height: 35vh;
+  overflow: auto;
+
+  .columnHeader {
+    color: white;
+    background-color: $stevens-red;
+    font-weight: 300;
+    margin: 0;
+    padding: 0.3rem 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .columnBody {
+    padding: 0 0.7rem;
+  }
+}
+
+.column {
+  @include column();
+}
+
+.mainColumn {
+  @include column();
+  min-height: 50vh;
+}
+
+.subColumn {
+  margin-bottom: 0.5rem;
+
+  .columnHeader {
+    color: white;
+    background-color: $stevens-gray;
+    font-weight: 300;
+    font-size: 1.1rem;
+    margin: 0 -0.7rem;
+    padding: 0.2rem 0.7rem;
+  }
+
+  .columnBody {
+    padding: 0.2rem 0;
+  }
+}
+
+.columnButton {
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  border: none;
+  i { font-size: 1.6rem; color: white; }
+}
+
+.course {
+  border: 1px solid $stevens-red;
+  margin: 0.7rem 0;
+  padding: 0.3rem 0.6rem;
+  display: flex;
+  justify-content: space-between;
+}
