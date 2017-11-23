@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import styles from './studyPlan.styles';
+import styles from './manage.styles';
 
 const Column = (props) => (
   <div className={

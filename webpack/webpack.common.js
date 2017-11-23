@@ -22,13 +22,11 @@ exports.commonConfig = {
         include : this.SRC,
         exclude: /node_modules/,
         use: [
-          'react-hot-loader/webpack',
           {
             loader: 'babel-loader',
             options: {
               presets: ['env', 'babel-preset-react'],
               plugins: [
-                'react-hot-loader/babel',
                 'transform-class-properties',
                 'transform-object-rest-spread'
               ]

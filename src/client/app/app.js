@@ -8,7 +8,7 @@ import Login from './login/login';
 import Register from './login/register';
 import Configure from './configure/configure';
 import Dashboard from './dashboard/dashboard';
-import StudyPlan from './studyPlan/studyPlan';
+import Manage from './manage/manage';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +16,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    return this.props.refreshSession();
+    if (!this.props.user) {
+      return this.props.refreshSession();
+    }
   }
 
   render() {
@@ -28,7 +30,7 @@ class App extends React.Component {
         case ('/register'): return <Register/>;
         case ('/configure'): return authenticated && <Configure/>;
         case ('/dashboard'): return configured && <Dashboard/>;
-        case ('/studyplan'): return configured && <StudyPlan/>;
+        case ('/studyplan'): return configured && <Manage/>;
       default: return authenticated ? <Dashboard/> : <Login/>;
       }
     };

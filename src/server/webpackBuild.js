@@ -19,9 +19,7 @@ module.exports = (app) => {
     publicPath: '/'
   }));
 
-  app.use(webpackHotMiddleware(compiler, {
-    reload: true
-  }));
+  app.use(webpackHotMiddleware(compiler));
 
   app.use('/*', (req, res, next) => {
     var filename = path.join(compiler.outputPath, 'index.html');

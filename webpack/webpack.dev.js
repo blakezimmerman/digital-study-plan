@@ -5,7 +5,6 @@ const { SRC, APP_DIR, commonConfig } = require('./webpack.common.js');
 module.exports = webpackMerge(commonConfig, {
   entry: [
     'webpack-hot-middleware/client',
-    'react-hot-loader/patch',
     APP_DIR + '/index.js'
   ],
 
@@ -26,6 +25,7 @@ module.exports = webpackMerge(commonConfig, {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 });

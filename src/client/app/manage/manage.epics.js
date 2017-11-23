@@ -1,7 +1,7 @@
 import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
 import { api, post } from 'client/shared/apiUtils';
-import { SAVE_PLAN } from './studyPlan.reducer';
+import { SAVE_PLAN } from './manage.reducer';
 import { REFRESH_SESSION } from '../login/login.reducer';
 import { user } from '../login/user.selectors';
 import { switchMap } from 'rxjs/operators/switchMap';

@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-.button {
+@mixin button() {
   color: white;
   font-size: 1rem;
   font-weight: 300;
@@ -29,6 +29,7 @@
 }
 
 .reset {
+  @include button();
   background-color: #cc0000;
 
   &:hover {
@@ -37,6 +38,7 @@
 }
 
 .save {
+  @include button();
   background-color: #4286f4;
 
   &:hover {
@@ -59,8 +61,6 @@
 @mixin column() {
   border: 1px solid $stevens-gray;
   margin-bottom: 1rem;
-  max-height: 35vh;
-  overflow: auto;
 
   .columnHeader {
     color: white;
@@ -74,6 +74,8 @@
 
   .columnBody {
     padding: 0 0.7rem;
+    max-height: 35vh;
+    overflow: auto;
   }
 }
 
@@ -100,6 +102,7 @@
 
   .columnBody {
     padding: 0.2rem 0;
+    max-height: none;
   }
 }
 
