@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { actionCreator, asyncActionCreator, asyncReducer, getType } from 'client/shared/reduxUtils';
+import { actionCreator, asyncActionCreator, asyncReducer, getType, clone } from 'client/shared/reduxUtils';
 import { emptyStudyPlan } from 'client/shared/studyPlans';
 
 export const INIT_STUDY_PLAN = actionCreator('INIT_STUDY_PLAN');
@@ -75,11 +75,11 @@ const reorder = (state, payload) => {
 const studyPlan = (state = emptyStudyPlan.plan, action) => {
   switch (action.type) {
     case getType(INIT_STUDY_PLAN):
-      return action.payload;
+      return clone(action.payload);
     case getType(RESET_PLAN):
       return {
-        majors: action.payload.majors,
-        minors: action.payload.minors,
+        majors: clone(action.payload.majors),
+        minors: clone(action.payload.minors),
         additional: [],
         semesters: []
       }

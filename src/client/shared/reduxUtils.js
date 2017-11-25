@@ -44,3 +44,5 @@ export const asyncReducer = (asyncAction) =>
         return state;
     }
   };
+
+export const clone = (struct) => JSON.parse(JSON.stringify(struct));
