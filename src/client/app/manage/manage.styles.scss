@@ -120,4 +120,7 @@
   padding: 0.3rem 0.6rem;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+  cursor: grab;
+  cursor: -webkit-grab;
 }

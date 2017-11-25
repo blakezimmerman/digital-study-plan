@@ -9,6 +9,13 @@
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+:global(.dragging) {
+  cursor: pointer;
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  user-select: none;
+}
+
 // COLORS
 
 $stevens-red: #A32638;

@@ -4,10 +4,10 @@ import { DropZone, DragItem } from 'client/shared/dragDropUtils';
 import Column from './column';
 import Course from './course';
 
-const Major = ({ major }) => (
+const Major = ({ major, index }) => (
   <Column title={major.name}>
     {major.semesters.map((semester, sIndex) =>
-      <DropZone id={major.name + sIndex} key={sIndex}>
+      <DropZone id={`${major.name}-${index}-${sIndex}`} disabled={true} key={sIndex}>
         <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
           {semester.map((course) =>
             <DragItem id={course.id} key={course.id}>
@@ -23,5 +23,6 @@ const Major = ({ major }) => (
 export default Major;
 
 Major.PropTypes = {
-  major: PropTypes.object.isRequired
+  major: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired
 };

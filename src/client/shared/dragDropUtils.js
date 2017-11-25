@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 export const DropZone = (props) => (
-  <Droppable droppableId={props.id}>
+  <Droppable droppableId={props.id} isDropDisabled={props.disabled}>
     {(provided, snapshot) => (
       <div ref={provided.innerRef}>
         {props.children}
@@ -15,6 +15,7 @@ export const DropZone = (props) => (
 
 DropZone.PropTypes = {
   id: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   children: PropTypes.element
 };
 

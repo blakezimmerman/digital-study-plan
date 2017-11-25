@@ -8,7 +8,7 @@ const newCourse = () => {};
 
 const Additional = ({ courses, add }) => (
   <Column title='Additional Courses' add={add}>
-    <DropZone id='additional'>
+    <DropZone id='additional' disabled={true}>
       {courses.map((course) =>
         <DragItem id={course.id} key={course.id}>
           <Course course={course}/>

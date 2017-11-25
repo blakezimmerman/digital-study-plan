@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './manage.styles';
 import { user } from 'client/app/login/user.selectors';
-import { INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER } from './manage.reducer';
+import { INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER, ADD_TO_PLAN, REORDER } from './manage.reducer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Column from './column';
 import Course from './course';
@@ -29,16 +29,34 @@ class Manage extends React.Component {
 
   newCourse = () => {};
 
-  onDragEnd(result) {
+  onDragStart = (initial) => {
+    document.body.classList.add('dragging');
+  }
+
+  onDragEnd = (result) => {
+    document.body.classList.remove('dragging');
     if (!result.destination) {
       return;
     }
-    return;
+    if (result.destination.droppableId !== result.source.droppableId) {
+      this.props.addToPlan({
+        srcId: result.source.droppableId,
+        srcIndex: result.source.index,
+        destId: result.destination.droppableId,
+        destIndex: result.destination.index
+      });
+    } else {
+      this.props.reorder({
+        semIndex: result.source.droppableId.split('-')[1],
+        srcIndex: result.source.index,
+        destIndex: result.destination.index
+      });
+    }
   }
 
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
         <div className={styles.container}>
           <div className={styles.buttonGroup}>
             <button className={styles.reset} onClick={this.handleReset}>
@@ -51,10 +69,10 @@ class Manage extends React.Component {
           <div className={styles.columnGroup}>
             <div className={styles.half}>
               {this.props.majors.map((major, index) =>
-                <Major major={major} key={index}/>
+                <Major major={major} index={index} key={index}/>
               )}
               {this.props.minors.map((minor, index) =>
-                <Minor minor={minor} key={index}/>
+                <Minor minor={minor} index={index} key={index}/>
               )}
               <Additional courses={this.props.additional} add={this.newCourse}/>
             </div>
@@ -80,7 +98,9 @@ const mapDispatch = {
   initPlan: INIT_STUDY_PLAN,
   resetPlan: RESET_PLAN,
   savePlan: SAVE_PLAN.PENDING,
-  addSemester: ADD_SEMESTER
+  addSemester: ADD_SEMESTER,
+  addToPlan: ADD_TO_PLAN,
+  reorder: REORDER
 };
 
 export default connect(mapState, mapDispatch)(Manage);
@@ -94,5 +114,7 @@ Manage.PropTypes = {
   initPlan: PropTypes.func.isRequired,
   resetPlan: PropTypes.func.isRequired,
   savePlan: PropTypes.func.isRequired,
-  addSemester: PropTypes.func.isRequired
+  addSemester: PropTypes.func.isRequired,
+  addToPlan: PropTypes.func.isRequired,
+  reorder: PropTypes.func.isRequired
 };
