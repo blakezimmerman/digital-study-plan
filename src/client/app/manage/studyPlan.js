@@ -7,15 +7,15 @@ import Course from './course';
 const StudyPlan = ({ semesters, add }) => (
   <Column title={'Study Plan'} main={true} add={add}>
     {semesters.map((semester, sIndex) =>
-      <DropZone id={'studyPlan-' + sIndex} key={sIndex}>
-        <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
+      <Column title={'Semester ' + (sIndex + 1)} sub={true} key={sIndex}>
+        <DropZone id={'studyPlan-' + sIndex} key={sIndex}>
           {semester.map((course) =>
             <DragItem id={course.id} key={course.id}>
               <Course course={course}/>
             </DragItem>
           )}
-        </Column>
-      </DropZone>
+        </DropZone>
+      </Column>
     )}
   </Column>
 );

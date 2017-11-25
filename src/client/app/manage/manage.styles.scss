@@ -85,7 +85,12 @@
 
 .mainColumn {
   @include column();
-  min-height: 50vh;
+  min-height: 60vh;
+
+  .columnBody {
+    max-height: 60vh;
+    overflow: auto;
+  }
 }
 
 .subColumn {

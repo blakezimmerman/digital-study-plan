@@ -38,7 +38,7 @@ const addtoPlan = (state, payload) => {
       newMinors[src[1]] = newMinor;
     }
 
-    // remove course from additional
+  // remove course from additional
   } else {
     newAdditional = Array.from(state.additional);
     [course] = newAdditional.splice(srcIndex, 1);
