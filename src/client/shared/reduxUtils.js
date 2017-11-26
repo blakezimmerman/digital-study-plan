@@ -11,6 +11,8 @@ export const asyncActionCreator = (type) => ({
 
 export const getType = (action) => action().type;
 
+export const isType = (action) => x => x.type === getType(action);
+
 const asyncInitialState = {
   pending: false,
   result: undefined,
@@ -44,5 +46,3 @@ export const asyncReducer = (asyncAction) =>
         return state;
     }
   };
-
-export const clone = (struct) => JSON.parse(JSON.stringify(struct));

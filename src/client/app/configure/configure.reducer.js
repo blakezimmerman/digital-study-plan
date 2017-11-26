@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { actionCreator, asyncActionCreator, asyncReducer, getType } from 'client/shared/reduxUtils';
+import { actionCreator, asyncActionCreator, asyncReducer, isType } from 'client/shared/reduxUtils';
+import { clone, match } from 'client/shared/miscUtils';
 import { emptyStudyPlan } from 'client/shared/studyPlans';
 
 export const CONFIG_INIT_PLAN = actionCreator('CONFIG_INIT_PLAN');
@@ -7,40 +8,40 @@ export const CONFIG_SUBMIT_PLAN = asyncActionCreator('CONFIG_SUBMIT_PLAN');
 export const ADD_PROGRAM = actionCreator('ADD_PROGRAM');
 export const REMOVE_PROGRAM = actionCreator('REMOVE_PROGRAM');
 
-const studyPlan = (state = emptyStudyPlan, action) => {
-  switch (action.type) {
-    case getType(CONFIG_INIT_PLAN):
-      return action.payload;
-    case getType(ADD_PROGRAM):
+const studyPlan = (state = emptyStudyPlan, action) =>
+  match(action)
+    .on(isType(CONFIG_INIT_PLAN), action => clone(action.payload))
+    .on(isType(ADD_PROGRAM), action => {
       const addType = action.payload.type === 'Major' ? 'majors' : 'minors';
+      const result = [ ...state.programs[addType], action.payload ];
       return {
         ...state,
         programs: {
           ...state.programs,
-          [addType]: [ ...state.programs[addType], action.payload ]
+          [addType]: result
         },
         plan: {
           ...state.plan,
-          [addType]: [ ...state.plan[addType], action.payload ]
+          [addType]: result
         }
-      };
-    case getType(REMOVE_PROGRAM):
+      }
+    })
+    .on(isType(REMOVE_PROGRAM), action => {
       const rmType = action.payload.type === 'Major' ? 'majors' : 'minors';
+      const result = state.programs[rmType].filter(x => x !== action.payload);
       return {
         ...state,
         programs: {
           ...state.programs,
-          [rmType]: state.programs[rmType].filter(x => x !== action.payload)
+          [rmType]: result
         },
         plan: {
           ...state.plan,
-          [rmType]: state.plan[rmType].filter(x => x !== action.payload)
+          [rmType]: result
         }
-      };
-    default:
-      return state;
-  }
-}
+      }
+    })
+    .otherwise(action => state);
 
 export const configure = combineReducers({
   studyPlan,
