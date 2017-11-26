@@ -18,6 +18,10 @@ class Configure extends React.Component {
     }
   }
 
+  hasProgram = (type) => (program) => (
+    this.props.programs[type].filter(x => x.name === program.name).length
+  );
+
   addProgram = (program) => () => {
     this.props.addProgram(program);
   };
@@ -49,12 +53,14 @@ class Configure extends React.Component {
               programs={majors}
               title='Available Majors'
               add={true}
+              disabled={this.hasProgram('majors')}
               callback={this.addProgram}
             />
             <ProgramList
               programs={minors}
               title='Available Minors'
               add={true}
+              disabled={this.hasProgram('minors')}
               callback={this.addProgram}
             />
           </div>
