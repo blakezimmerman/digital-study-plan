@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { actionCreator, asyncActionCreator, asyncReducer, isType } from 'client/shared/reduxUtils';
-import { clone, match } from 'client/shared/miscUtils';
+import { clone, match, is } from 'client/shared/miscUtils';
 import { emptyStudyPlan } from 'client/shared/studyPlans';
 
 export const INIT_STUDY_PLAN = actionCreator('INIT_STUDY_PLAN');
 export const RESET_PLAN = actionCreator('RESET_PLAN');
 export const SAVE_PLAN = asyncActionCreator('SAVE_PLAN');
 export const ADD_SEMESTER = actionCreator('ADD_SEMESTER');
+export const CHANGE_TERM = actionCreator('CHANGE_TERM');
 export const ADD_TO_PLAN = actionCreator('ADD_TO_PLAN');
 export const REORDER = actionCreator('REORDER');
 
@@ -21,20 +22,46 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
         semesters: []
       })
     )
-    .on(isType(ADD_SEMESTER), action =>
-      ({
+    .on(isType(ADD_SEMESTER), action => {
+      let term, year;
+      if (!state.semesters.length) {
+        const now = new Date();
+        const isFallReg = now.getMonth() > 2 && now.getMonth() < 9;
+        term = isFallReg ? 'Fall' : 'Spring';
+        year = isFallReg ? now.getFullYear() : now.getFullYear() + 1;
+      } else {
+        const lastSem = state.semesters[state.semesters.length - 1]
+        term = match(lastSem.term)
+          .on(is('Spring', 'Summer'), x => 'Fall')
+          .otherwise(x => 'Spring');
+        year = lastSem.term === 'Fall' ? lastSem.year + 1 : lastSem.year;
+      }
+      return {
         ...state,
         semesters: [
           ...state.semesters,
-          []
+          {
+            term: term,
+            year: year,
+            courses: []
+          }
         ]
-      })
-    )
+      };
+    })
+    .on(isType(CHANGE_TERM), action => {
+      const { index, type, value } = action.payload;
+      let newSemesters = clone(state.semesters);
+      newSemesters[index][type] = value;
+      return {
+        ...state,
+        semesters: newSemesters
+      };
+    })
     .on(isType(ADD_TO_PLAN), action => {
       const { srcId, srcIndex, destId, destIndex } = action.payload;
       const src = srcId.split('-');
       let course, newMajors, newMinors, newAdditional;
-      let newSemesters = Array.from(state.semesters);
+      let newSemesters = clone(state.semesters);
 
       // remove course from majors
       if (src[2]) {
@@ -47,8 +74,8 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
 
         // remove course from study plan
         if (src[0] === 'studyPlan') {
-          const newSemester = Array.from(state.semesters[src[1]]);
-          [course] = newSemester.splice(srcIndex, 1);
+          const newSemester = clone(state.semesters[src[1]]);
+          [course] = newSemester.courses.splice(srcIndex, 1);
           newSemesters[src[1]] = newSemester;
 
         // remove course from minors
@@ -67,9 +94,9 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
 
       // add course to study plan
       const semIndex = destId.split('-')[1];
-      const newSemester = Array.from(state.semesters[semIndex]);
+      const newSemester = Array.from(state.semesters[semIndex].courses);
       newSemester.splice(destIndex, 0, course);
-      newSemesters[semIndex] = newSemester;
+      newSemesters[semIndex].courses = newSemester;
 
       // return new study plan
       return {
@@ -81,11 +108,11 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
     })
     .on(isType(REORDER), action => {
       const { semIndex, srcIndex, destIndex } = action.payload;
-      const result = Array.from(state.semesters[semIndex]);
+      const result = Array.from(state.semesters[semIndex].courses);
       const [removed] = result.splice(srcIndex, 1);
       result.splice(destIndex, 0, removed);
-      const newSemesters = Array.from(state.semesters);
-      newSemesters[semIndex] = result;
+      const newSemesters = clone(state.semesters);
+      newSemesters[semIndex].courses = result;
       return {
         ...state,
         semesters: newSemesters

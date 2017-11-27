@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './manage.styles';
 import { user } from 'client/app/login/user.selectors';
-import { INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER, ADD_TO_PLAN, REORDER } from './manage.reducer';
+import {
+  INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER,
+  ADD_TO_PLAN, REORDER, CHANGE_TERM
+} from './manage.reducer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Column from './column';
 import Course from './course';
@@ -26,6 +29,13 @@ class Manage extends React.Component {
   handleSave = () => this.props.savePlan();
 
   newSemester = () => this.props.addSemester();
+
+  handleSelect = (type, index) => (event) => {
+    const value = type === 'term'
+      ? event.target.value
+      : parseInt(event.target.value);
+    return this.props.changeTerm({ index, type, value});
+  };
 
   newCourse = () => {};
 
@@ -77,7 +87,11 @@ class Manage extends React.Component {
               <Additional courses={this.props.additional} add={this.newCourse}/>
             </div>
             <div className={styles.half}>
-              <StudyPlan semesters={this.props.semesters} add={this.newSemester}/>
+              <StudyPlan
+                semesters={this.props.semesters}
+                add={this.newSemester}
+                handleSelect={this.handleSelect}
+              />
             </div>
           </div>
         </div>
@@ -99,6 +113,7 @@ const mapDispatch = {
   resetPlan: RESET_PLAN,
   savePlan: SAVE_PLAN.PENDING,
   addSemester: ADD_SEMESTER,
+  changeTerm: CHANGE_TERM,
   addToPlan: ADD_TO_PLAN,
   reorder: REORDER
 };
@@ -115,6 +130,7 @@ Manage.PropTypes = {
   resetPlan: PropTypes.func.isRequired,
   savePlan: PropTypes.func.isRequired,
   addSemester: PropTypes.func.isRequired,
+  changeTerm: PropTypes.func.isRequired,
   addToPlan: PropTypes.func.isRequired,
   reorder: PropTypes.func.isRequired
 };

@@ -9,6 +9,7 @@ const Column = (props) => (
   }>
     <h2 className={styles.columnHeader}>
       {props.title}
+      {props.headerContent}
       {props.add &&
         <button className={styles.columnButton} onClick={props.add}>
           <i className={`material-icons`}>add_circle</i>
@@ -25,7 +26,8 @@ export default Column;
 
 Column.PropTypes = {
   title: PropTypes.string.isRequired,
+  headerContent: PropTypes.element,
   main: PropTypes.bool,
-  add: PropTypes.func,
+  sub: PropTypes.bool,
   children: PropTypes.element
 };
