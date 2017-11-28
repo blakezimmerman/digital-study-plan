@@ -18,7 +18,7 @@ if (module.hot) {
   );
 
   module.hot.accept('../rootEpic', () =>
-    epicMiddleware.replaceEpic(require('../rootReducer').default)
+    epicMiddleware.replaceEpic(require('../rootEpic').default)
   );
 }
 

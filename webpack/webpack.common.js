@@ -35,8 +35,12 @@ exports.commonConfig = {
         ],
       },
       {
-        test: /\.(pdf|png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        test: /\.(pdf|png|jpe?g|gif|svg|woff|woff2|ttf|eot)$/,
         use: 'file-loader?name=assets/[hash].[ext]'
+      },
+      {
+        test: /\.ico$/,
+        use: 'file-loader?name=favicon.ico'
       }
     ]
   },

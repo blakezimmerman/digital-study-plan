@@ -144,7 +144,7 @@ export const majors = [
       [
         { code: 'ME-345', name: 'Modeling and Simulation', credits: 3.0, term: 6, id: 'me-r-39' },
         { code: 'E-355', name: 'Engineering Economics', credits: 4.0, term: 6, id: 'me-r-40' },
-        { code: 'ME-322', name: 'Engineering Design VI', credits: 3.0, term: 6, id: 'me-r-41' },
+        { code: 'ME-322', name: 'Engineering Design VI', credits: 2.0, term: 6, id: 'me-r-41' },
         { code: 'ME-335', name: 'Thermal Engineering', credits: 3.0, term: 6, id: 'me-r-42' },
         { code: 'ME-358', name: 'Machine Dynamics and Mechanisms', credits: 3.0, term: 6, id: 'me-r-43' },
         { code: 'IDE-400', name: 'Senior Innovation I', credits: 1.0, term: 6, id: 'me-r-44' },
