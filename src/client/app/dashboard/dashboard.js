@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './dashboard.styles';
-import { user } from '../login/user.selectors';
+import { creditsCompleted, reqCredits, upcomingCourses } from '../login/user.selectors';
 import { routeActions } from '../../router/router';
 
 class Dashboard extends React.Component {
@@ -27,7 +27,9 @@ class Dashboard extends React.Component {
 }
 
 const mapState = (state) => ({
-  user: user(state)
+  creditsCompleted: creditsCompleted(state),
+  reqCredits: reqCredits(state),
+  upcomingCourses: upcomingCourses(state)
 });
 
 const mapDispatch = {
@@ -37,6 +39,8 @@ const mapDispatch = {
 export default connect(mapState, mapDispatch)(Dashboard);
 
 Dashboard.PropTypes = {
-  user: PropTypes.object.isRequired,
+  creditsCompleted: PropTypes.number.isRequired,
+  reqCredits: PropTypes.number.isRequired,
+  upcomingCourses: PropTypes.array.isRequired,
   studyPlanRoute: PropTypes.func.isRequired
 };

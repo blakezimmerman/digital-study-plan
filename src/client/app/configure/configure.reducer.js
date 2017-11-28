@@ -22,7 +22,8 @@ const studyPlan = (state = emptyStudyPlan, action) =>
         },
         plan: {
           ...state.plan,
-          [addType]: result
+          [addType]: result,
+          semesters: []
         }
       }
     })
@@ -37,7 +38,8 @@ const studyPlan = (state = emptyStudyPlan, action) =>
         },
         plan: {
           ...state.plan,
-          [rmType]: result
+          [rmType]: result,
+          semesters: []
         }
       }
     })
