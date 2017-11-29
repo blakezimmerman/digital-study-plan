@@ -31,18 +31,18 @@ const StudyPlan = ({ semesters, add, handleSelect }) => {
   );
 
   return (
-    <Column title={'Study Plan'} main={true} headerContent={addButton}>
+    <Column title={'Study Plan'} type={'main'} headerContent={addButton}>
       {semesters.map((semester, sIndex) =>
         <Column
           title={`Semester ${sIndex + 1}`}
           headerContent={termSelects(semester, sIndex)}
-          sub={true}
+          type={'sub'}
           key={sIndex}
         >
           <DropZone id={'studyPlan-' + sIndex} key={sIndex}>
             {semester.courses.map((course) =>
               <DragItem id={course.id} key={course.id}>
-                <Course course={course}/>
+                <Course course={course} grabbable={true}/>
               </DragItem>
             )}
           </DropZone>

@@ -9,7 +9,7 @@ const Minor = ({ minor, index }) => (
     <DropZone id={minor.name + '-' + index } disabled={true}>
       {minor.courses.map((course) =>
         <DragItem id={course.id} key={course.id}>
-          <Course course={course}/>
+          <Course course={course} grabbable={true}/>
         </DragItem>
       )}
     </DropZone>

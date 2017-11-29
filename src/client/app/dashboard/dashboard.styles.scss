@@ -24,11 +24,20 @@
   &:hover {
     background-color: #3b78db
   }
+
+  @media (max-width: 600px) {
+    width: 90%
+  }
 }
 
 .progressContainer {
-  width: 70%;
+  width: 50%;
   text-align: center;
+  margin: 0.5rem 0;
+
+  @media (max-width: 600px) {
+    width: 90%
+  }
 }
 
 .progressBar {
@@ -40,4 +49,8 @@
 
 .credRatio {
   font-weight: 500;
+}
+
+.semesterContainer {
+  margin: 0.5rem 1rem;
 }

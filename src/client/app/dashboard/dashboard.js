@@ -2,9 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './dashboard.styles';
-import { creditsCompleted, reqCredits, upcomingCourses } from '../login/user.selectors';
+import { creditsCompleted, reqCredits, upcomingSemester } from '../login/user.selectors';
 import { routeActions } from '../../router/router';
 import ProgressBar from './progressBar';
+import NextSemester from './nextSemester';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Dashboard extends React.Component {
           total={this.props.reqCredits}
           totalName='Credits Required'
         />
+        <NextSemester semester={this.props.upcomingSemester}/>
       </div>
     );
   }
@@ -36,7 +38,7 @@ class Dashboard extends React.Component {
 const mapState = (state) => ({
   creditsCompleted: creditsCompleted(state),
   reqCredits: reqCredits(state),
-  upcomingCourses: upcomingCourses(state)
+  upcomingSemester: upcomingSemester(state)
 });
 
 const mapDispatch = {
@@ -48,6 +50,6 @@ export default connect(mapState, mapDispatch)(Dashboard);
 Dashboard.PropTypes = {
   creditsCompleted: PropTypes.number.isRequired,
   reqCredits: PropTypes.number.isRequired,
-  upcomingCourses: PropTypes.array.isRequired,
+  upcomingSemester: PropTypes.array.isRequired,
   studyPlanRoute: PropTypes.func.isRequired
 };

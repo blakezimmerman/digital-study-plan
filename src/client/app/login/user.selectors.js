@@ -63,18 +63,18 @@ export const reqCredits = createSelector(
     , 0)
 );
 
-export const upcomingCourses = createSelector(
+export const upcomingSemester = createSelector(
   plan,
-  (plan) => {
+  ({ semesters }) => {
     const now = new Date();
     const isFallReg = now.getMonth() > 2 && now.getMonth() < 9;
     const term = isFallReg ? 'Fall' : 'Spring';
     const year = isFallReg ? now.getFullYear() : now.getFullYear() + 1;
-    return plan.semesters.reduce((courses, semester) => {
-      if (semester.term === term && semester.year === year) {
-        courses = semester.courses
+    for (let i in semesters) {
+      if (semesters[i].term === term && semesters[i].year === year) {
+        return semesters[i];
       }
-      return courses;
-    }, []);
+    }
+    console.log('DIDNT FIND SEMESTER')
   }
 );

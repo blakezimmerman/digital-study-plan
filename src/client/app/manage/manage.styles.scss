@@ -111,6 +111,14 @@
   }
 }
 
+.unboundColumn {
+  @include column();
+
+  .columnBody {
+    max-height: none;
+  }
+}
+
 .columnButton {
   background-color: rgba(0, 0, 0, 0);
   cursor: pointer;
@@ -125,6 +133,9 @@
   padding: 0.3rem 0.6rem;
   display: flex;
   justify-content: space-between;
+}
+
+.grabbable {
   cursor: pointer;
   cursor: grab;
   cursor: -webkit-grab;

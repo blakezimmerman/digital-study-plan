@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import styles from './manage.styles';
 
-const Course = ({ course }) => (
-  <div className={styles.course}>
+const Course = ({ course, grabbable }) => (
+  <div className={`${styles.course} ${grabbable && styles.grabbable}`}>
     <div>
       {course.code && course.code + ' — '}
       {course.name}
@@ -18,4 +18,5 @@ export default Course;
 
 Course.PropTypes = {
   course: PropTypes.object.isRequired,
+  grabbable: PropTypes.bool
 };

@@ -1,11 +1,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import styles from './manage.styles';
+import styles from './manage.styles'
+import { match, is } from 'client/shared/miscUtils';
 
 const Column = (props) => (
   <div className={
-    props.sub ? styles.subColumn :
-    props.main ? styles.mainColumn : styles.column
+    match(props.type)
+      .on(is('sub'), () => styles.subColumn)
+      .on(is('main'), () => styles.mainColumn)
+      .on(is('unbound'), () => styles.unboundColumn)
+      .otherwise(() => styles.column)
   }>
     <h2 className={styles.columnHeader}>
       {props.title}
@@ -27,7 +31,6 @@ export default Column;
 Column.PropTypes = {
   title: PropTypes.string.isRequired,
   headerContent: PropTypes.element,
-  main: PropTypes.bool,
-  sub: PropTypes.bool,
+  type: PropTypes.string,
   children: PropTypes.element
 };

@@ -19,7 +19,7 @@ const Additional = ({ courses, add }) => {
       <DropZone id='additional' disabled={true}>
         {courses.map((course) =>
           <DragItem id={course.id} key={course.id}>
-            <Course course={course}/>
+            <Course course={course} grabbable={true}/>
           </DragItem>
         )}
       </DropZone>
