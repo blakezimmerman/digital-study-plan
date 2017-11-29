@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './dashboard.styles';
 import { creditsCompleted, reqCredits, upcomingCourses } from '../login/user.selectors';
 import { routeActions } from '../../router/router';
+import ProgressBar from './progressBar';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -21,6 +22,12 @@ class Dashboard extends React.Component {
         >
           Manage Study Plan
         </button>
+        <ProgressBar
+          cur={this.props.creditsCompleted}
+          curName='Credits Completed'
+          total={this.props.reqCredits}
+          totalName='Credits Required'
+        />
       </div>
     );
   }

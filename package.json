@@ -21,6 +21,7 @@
     "react": "^16.1.1",
     "react-beautiful-dnd": "^2.6.4",
     "react-dom": "^16.1.1",
+    "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-first-router": "0.0.16-next",

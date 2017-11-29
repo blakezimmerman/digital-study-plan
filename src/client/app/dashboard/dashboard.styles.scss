@@ -25,3 +25,19 @@
     background-color: #3b78db
   }
 }
+
+.progressContainer {
+  width: 70%;
+  text-align: center;
+}
+
+.progressBar {
+  border: 1px solid black;
+  border-radius: 20px;
+  height: 2rem;
+  overflow: hidden;
+}
+
+.credRatio {
+  font-weight: 500;
+}
