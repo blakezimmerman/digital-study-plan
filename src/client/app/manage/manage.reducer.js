@@ -9,11 +9,15 @@ export const RESET_PLAN = actionCreator('RESET_PLAN');
 export const SAVE_PLAN = asyncActionCreator('SAVE_PLAN');
 export const ADD_SEMESTER = actionCreator('ADD_SEMESTER');
 export const CHANGE_TERM = actionCreator('CHANGE_TERM');
+export const NEW_COURSE = actionCreator('NEW_COURSE');
 export const ADD_TO_PLAN = actionCreator('ADD_TO_PLAN');
 export const REORDER = actionCreator('REORDER');
 export const UNDO_PLAN = actionCreator('UNDO_PLAN');
 export const REDO_PLAN = actionCreator('REDO_PLAN');
 export const CLEAR_PLAN_HISTORY = actionCreator('RESET_PLAN_HISTORY');
+
+export const OPEN_ADD_MODAL = actionCreator('OPEN_ADD_MODAL');
+export const CLOSE_ADD_MODAL = actionCreator('CLOSE_ADD_MODAL');
 
 const studyPlan = (state = emptyStudyPlan.plan, action) =>
   match(action)
@@ -61,6 +65,12 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
         semesters: newSemesters
       };
     })
+    .on(isType(NEW_COURSE), action =>
+      ({
+        ...state,
+        additional: [ ...state.additional, action.payload ]
+      })
+    )
     .on(isType(ADD_TO_PLAN), action => {
       const { srcId, srcIndex, destId, destIndex } = action.payload;
       const src = srcId.split('-');
@@ -124,11 +134,22 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
     })
     .otherwise(action => state);
 
+const initModalsState = {
+  addModalOpen: false
+}
+
+const modals = (state = initModalsState, action) =>
+  match(action)
+    .on(isType(OPEN_ADD_MODAL), action => ({ ...state, addModalOpen: true }))
+    .on(isType(CLOSE_ADD_MODAL), action => ({ ...state, addModalOpen: false }))
+    .otherwise(actions => state);
+
 export const manage = combineReducers({
   studyPlan: undoable(studyPlan, {
     clearHistoryType: getType(CLEAR_PLAN_HISTORY),
     undoType: getType(UNDO_PLAN),
     redoType: getType(REDO_PLAN)
   }),
-  savePlanReq: asyncReducer(SAVE_PLAN)
+  savePlanReq: asyncReducer(SAVE_PLAN),
+  modals
 });

@@ -13,41 +13,21 @@
   width: 100%;
 }
 
-@mixin button() {
-  color: white;
-  font-size: 1rem;
-  font-weight: 300;
-  text-align: center;
-  width: 30%;
-  padding: 0.7rem 0.9rem;
-  display: block;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 1rem 1.5rem;
-  transition: 0.3s;
-
-  &:disabled, &:disabled:hover {
-    color: #555;
-    background-color: #aaa;
-  }
-}
-
 .reset {
   @include button();
-  background-color: #cc0000;
+  background-color: $failure;
 
   &:hover {
-    background-color: #b30000;
+    background-color: darken($failure, 8%);
   }
 }
 
 .save {
   @include button();
-  background-color: #5CB85C;
+  background-color: $success;
 
   &:hover {
-    background-color: #52a552
+    background-color: darken($success, 8%);
   }
 }
 
@@ -64,19 +44,19 @@
 
   .undo {
     border-radius: 5px 0 0 5px;
-    background-color: #cc0000;
+    background-color: $failure;
 
     &:hover {
-      background-color: #b30000;
+      background-color: darken($failure, 8%);
     }
   }
 
   .redo {
     border-radius: 0 5px 5px 0;
-    background-color: #4286f4;
+    background-color: $info;
 
     &:hover {
-      background-color: #3b78db
+      background-color: darken($info, 8%);
     }
   }
 }

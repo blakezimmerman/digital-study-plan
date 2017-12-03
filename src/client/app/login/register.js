@@ -11,13 +11,15 @@ class Register extends React.Component {
     this.state = {
       userNameInput: '',
       passwordInput: ''
-    }
+    };
   }
 
+  isDisabled = () => !(this.state.userNameInput && this.state.passwordInput);
+
   updateUserName = (event) =>
-  this.setState({
-    userNameInput: event.currentTarget.value
-  });
+    this.setState({
+      userNameInput: event.currentTarget.value
+    });
 
   updatePassword = (event) =>
     this.setState({
@@ -62,6 +64,7 @@ class Register extends React.Component {
               userName: this.state.userNameInput,
               password: this.state.passwordInput
             })}
+            disabled={this.isDisabled()}
           >
             Create Account
           </button>

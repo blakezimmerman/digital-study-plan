@@ -58,18 +58,12 @@
   z-index: 1;
 
   button {
+    @include button();
     color: black;
     background-color: rgba(0, 0, 0, 0);
-    font-size: 1rem;
-    font-weight: 300;
     width: 100%;
-    padding: 0.7rem 0.9rem;
-    text-align: left;
+    margin: 0;
     text-decoration: none;
-    display: block;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 
     &:hover {
       background-color: #f1f1f1

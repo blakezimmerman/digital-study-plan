@@ -19,11 +19,11 @@
 }
 
 .error {
-  color: red;
+  color: $failure;
 }
 
 .success {
-  color: green;
+  color: $success;
 }
 
 .inputs {
@@ -38,13 +38,11 @@
   }
 
   button {
+    @include button();
     background-color: $stevens-red;
-    color: white;
-    border: none;
-    border-radius: 5px;
     font-size: 1.1rem;
-    font-weight: 300;
     margin: 1rem 0 1.5rem 0;
     padding: 0.6rem 1rem;
+    width: 100%;
   }
 }

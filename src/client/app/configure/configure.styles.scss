@@ -7,27 +7,12 @@
 }
 
 .saveButton {
-  color: white;
-  background-color: #4286f4;
-  font-size: 1rem;
-  font-weight: 300;
-  text-align: center;
+  @include button();
+  background-color: $info;
   width: 50%;
-  padding: 0.7rem 0.9rem;
-  display: block;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 1rem 1.5rem;
-  transition: 0.3s;
 
   &:hover {
-    background-color: #3b78db
-  }
-
-  &:disabled {
-    color: #555;
-    background-color: #aaa;
+    background-color: darken($info, 8%);
   }
 }
 
@@ -77,11 +62,11 @@
   i { font-size: 1.6rem; }
 }
 
-.add { color: green; }
+.add { color: $success; }
 
-.remove { color: red; }
+.remove { color: $failure; }
 
-.disabled { color: #aaa; }
+.disabled { color: $disabledBG; }
 
 .noneText {
   display: flex;
@@ -91,6 +76,6 @@
 }
 
 .error {
-  color: red;
+  color: $failure;
   margin: 1rem 0 0 0;
 }

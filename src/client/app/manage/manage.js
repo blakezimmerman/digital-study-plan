@@ -8,15 +8,15 @@ import {
   curSemesters, canUndoPlan, canRedoPlan
 } from './manage.selectors';
 import {
-  INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER,
-  ADD_TO_PLAN, CHANGE_TERM, REORDER, UNDO_PLAN, REDO_PLAN
+  INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER, NEW_COURSE,
+  CHANGE_TERM, ADD_TO_PLAN, REORDER, UNDO_PLAN, REDO_PLAN,
 } from './manage.reducer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Column from './column';
 import Course from './course';
 import Major from './major';
 import Minor from './minor';
-import Additional from './additional';
+import Additional from './additional/additional';
 import StudyPlan from './studyPlan';
 
 class Manage extends React.Component {
@@ -38,14 +38,17 @@ class Manage extends React.Component {
 
   newSemester = () => this.props.addSemester();
 
+  newCourse = (code, name, credits) => {
+    const course = { code, name, credits, id: `add-e-${this.props.additional.length}` };
+    this.props.addNewCourse(course);
+  };
+
   handleSelect = (type, index) => (event) => {
     const value = type === 'term'
       ? event.target.value
       : parseInt(event.target.value);
     return this.props.changeTerm({ index, type, value});
   };
-
-  newCourse = () => {};
 
   onDragStart = (initial) => {
     document.body.classList.add('dragging');
@@ -140,6 +143,7 @@ const mapDispatch = {
   savePlan: SAVE_PLAN.PENDING,
   addSemester: ADD_SEMESTER,
   changeTerm: CHANGE_TERM,
+  addNewCourse: NEW_COURSE,
   addToPlan: ADD_TO_PLAN,
   reorder: REORDER,
   undo: UNDO_PLAN,
@@ -159,6 +163,7 @@ Manage.PropTypes = {
   savePlan: PropTypes.func.isRequired,
   addSemester: PropTypes.func.isRequired,
   changeTerm: PropTypes.func.isRequired,
+  addNewCourse: PropTypes.func.isRequired,
   addToPlan: PropTypes.func.isRequired,
   reorder: PropTypes.func.isRequired,
   undo: PropTypes.func.isRequired,
