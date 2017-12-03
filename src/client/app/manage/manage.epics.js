@@ -1,12 +1,17 @@
 import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
 import { api, post } from 'client/shared/apiUtils';
-import { SAVE_PLAN } from './manage.reducer';
+import { INIT_STUDY_PLAN, CLEAR_PLAN_HISTORY, SAVE_PLAN } from './manage.reducer';
 import { REFRESH_SESSION } from '../login/login.reducer';
 import { user } from '../login/user.selectors';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 import { mapTo } from 'rxjs/operators/mapTo';
+
+const initPlanEpic = (actions$) =>
+  actions$.ofType(getType(INIT_STUDY_PLAN)).pipe(
+    mapTo(CLEAR_PLAN_HISTORY())
+  );
 
 const submitPlanEpic = (actions$, store) =>
   actions$.ofType(getType(SAVE_PLAN.PENDING)).pipe(
@@ -16,7 +21,7 @@ const submitPlanEpic = (actions$, store) =>
       const curUser = user(state)
       const studyPlan = {
         programs: curUser.studyPlan.programs,
-        plan: state.manage.studyPlan
+        plan: state.manage.studyPlan.present
       };
       return post(api(`users/${curUser.userName}/updateStudyPlan`), studyPlan, SAVE_PLAN);
     })
@@ -28,6 +33,7 @@ const submitSuccessEpic = (actions$) =>
   );
 
 export const manageEpic = combineEpics(
+  initPlanEpic,
   submitPlanEpic,
   submitSuccessEpic
 );

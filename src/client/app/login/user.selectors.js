@@ -75,6 +75,5 @@ export const upcomingSemester = createSelector(
         return semesters[i];
       }
     }
-    console.log('DIDNT FIND SEMESTER')
   }
 );

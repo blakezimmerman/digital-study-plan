@@ -29,7 +29,9 @@ class Dashboard extends React.Component {
           total={this.props.reqCredits}
           totalName='Credits Required'
         />
-        <NextSemester semester={this.props.upcomingSemester}/>
+        {this.props.upcomingSemester &&
+          <NextSemester semester={this.props.upcomingSemester}/>
+        }
       </div>
     );
   }

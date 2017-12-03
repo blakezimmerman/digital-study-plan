@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { actionCreator, asyncActionCreator, asyncReducer, isType } from 'client/shared/reduxUtils';
+import undoable, { excludeAction } from 'redux-undo';
+import { actionCreator, asyncActionCreator, asyncReducer, isType, getType } from 'client/shared/reduxUtils';
 import { clone, match, is } from 'client/shared/miscUtils';
 import { emptyStudyPlan } from 'client/shared/studyPlans';
 
@@ -10,6 +11,9 @@ export const ADD_SEMESTER = actionCreator('ADD_SEMESTER');
 export const CHANGE_TERM = actionCreator('CHANGE_TERM');
 export const ADD_TO_PLAN = actionCreator('ADD_TO_PLAN');
 export const REORDER = actionCreator('REORDER');
+export const UNDO_PLAN = actionCreator('UNDO_PLAN');
+export const REDO_PLAN = actionCreator('REDO_PLAN');
+export const CLEAR_PLAN_HISTORY = actionCreator('RESET_PLAN_HISTORY');
 
 const studyPlan = (state = emptyStudyPlan.plan, action) =>
   match(action)
@@ -121,6 +125,10 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
     .otherwise(action => state);
 
 export const manage = combineReducers({
-  studyPlan,
+  studyPlan: undoable(studyPlan, {
+    clearHistoryType: getType(CLEAR_PLAN_HISTORY),
+    undoType: getType(UNDO_PLAN),
+    redoType: getType(REDO_PLAN)
+  }),
   savePlanReq: asyncReducer(SAVE_PLAN)
 });
