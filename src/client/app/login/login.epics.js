@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable';
 import { getType } from 'client/shared/reduxUtils';
 import { api, post, refreshSession } from 'client/shared/apiUtils';
+import { match, is } from 'client/shared/miscUtils';
 import { REFRESH_SESSION, LOGIN_REQUEST, REGISTER_REQUEST } from './login.reducer';
 import { routeActions } from 'client/router/router';
 import { Observable } from 'rxjs/Observable';
@@ -24,10 +25,12 @@ const loginRequestEpic = (actions$) =>
     )
   );
 
-const loginSuccessEpic = (actions$) =>
+const loginSuccessEpic = (actions$, store) =>
   actions$.ofType(getType(LOGIN_REQUEST.SUCCESS)).pipe(
     switchMap((actions) =>
-      Observable.of(routeActions.DASHBOARD(), REGISTER_REQUEST.RESET())
+      match(store.getState().location.pathname)
+        .on((is('/studyplan')), path => Observable.of())
+        .otherwise(path => Observable.of(routeActions.DASHBOARD(), REGISTER_REQUEST.RESET()))
     )
   );
 

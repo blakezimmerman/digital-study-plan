@@ -155,3 +155,36 @@
   cursor: grab;
   cursor: -webkit-grab;
 }
+
+.successModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 1.6rem;
+    color: $success;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  button {
+    @include button();
+    background-color: $info;
+
+    &:hover {
+      background-color: darken($info, 8%)
+    }
+  }
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

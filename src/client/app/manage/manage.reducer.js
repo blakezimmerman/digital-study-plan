@@ -18,6 +18,8 @@ export const CLEAR_PLAN_HISTORY = actionCreator('RESET_PLAN_HISTORY');
 
 export const OPEN_ADD_MODAL = actionCreator('OPEN_ADD_MODAL');
 export const CLOSE_ADD_MODAL = actionCreator('CLOSE_ADD_MODAL');
+export const OPEN_SAVE_MODAL = actionCreator('OPEN_SAVE_MODAL');
+export const CLOSE_SAVE_MODAL = actionCreator('CLOSE_SAVE_MODAL');
 
 const studyPlan = (state = emptyStudyPlan.plan, action) =>
   match(action)
@@ -81,7 +83,7 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
       if (src[2]) {
         const newMajorSemester = Array.from(state.majors[src[1]].semesters[src[2]]);
         [course] = newMajorSemester.splice(srcIndex, 1);
-        newMajors = Array.from(state.majors);
+        newMajors = clone(state.majors);
         newMajors[src[1]].semesters[src[2]] = newMajorSemester;
 
       } else if (src[1]) {
@@ -94,9 +96,9 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
 
         // remove course from minors
         } else {
-          const newMinor = { ...state.minors[src[1]] };
+          const newMinor = clone(state.minors[src[1]]);
           [course] = newMinor.courses.splice(srcIndex, 1);
-          newMinors = Array.from(state.minors);
+          newMinors = clone(state.minors);
           newMinors[src[1]] = newMinor;
         }
 
@@ -135,13 +137,16 @@ const studyPlan = (state = emptyStudyPlan.plan, action) =>
     .otherwise(action => state);
 
 const initModalsState = {
-  addModalOpen: false
+  addModalOpen: false,
+  saveModalOpen: false
 }
 
 const modals = (state = initModalsState, action) =>
   match(action)
     .on(isType(OPEN_ADD_MODAL), action => ({ ...state, addModalOpen: true }))
     .on(isType(CLOSE_ADD_MODAL), action => ({ ...state, addModalOpen: false }))
+    .on(isType(OPEN_SAVE_MODAL), action => ({ ...state, saveModalOpen: true }))
+    .on(isType(CLOSE_SAVE_MODAL), action => ({ ...state, saveModalOpen: false }))
     .otherwise(actions => state);
 
 export const manage = combineReducers({

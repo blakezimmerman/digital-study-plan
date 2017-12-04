@@ -9,7 +9,7 @@ import {
 } from './manage.selectors';
 import {
   INIT_STUDY_PLAN, RESET_PLAN, SAVE_PLAN, ADD_SEMESTER, NEW_COURSE,
-  CHANGE_TERM, ADD_TO_PLAN, REORDER, UNDO_PLAN, REDO_PLAN,
+  CHANGE_TERM, ADD_TO_PLAN, REORDER, UNDO_PLAN, REDO_PLAN, CLOSE_SAVE_MODAL,
 } from './manage.reducer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Column from './column';
@@ -18,6 +18,8 @@ import Major from './major';
 import Minor from './minor';
 import Additional from './additional/additional';
 import StudyPlan from './studyPlan';
+import HasSavedModal from './hasSavedModal';
+import { routeActions } from '../../router/router';
 
 class Manage extends React.Component {
   constructor(props) {
@@ -79,6 +81,11 @@ class Manage extends React.Component {
     return (
       <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
         <div className={styles.container}>
+          <HasSavedModal
+            isOpen={this.props.modalOpen}
+            close={this.props.closeModal}
+            toDashboard={this.props.toDashboard}
+          />
           <div className={styles.buttonGroup}>
             <button className={styles.reset} onClick={this.handleReset}>
               Reset Study Plan
@@ -134,7 +141,8 @@ const mapState = (state) => ({
   additional: curAdditional(state),
   semesters: curSemesters(state),
   canUndo: canUndoPlan(state),
-  canRedo: canRedoPlan(state)
+  canRedo: canRedoPlan(state),
+  modalOpen: state.manage.modals.saveModalOpen
 });
 
 const mapDispatch = {
@@ -147,7 +155,9 @@ const mapDispatch = {
   addToPlan: ADD_TO_PLAN,
   reorder: REORDER,
   undo: UNDO_PLAN,
-  redo: REDO_PLAN
+  redo: REDO_PLAN,
+  closeModal: CLOSE_SAVE_MODAL,
+  toDashboard: routeActions.DASHBOARD
 };
 
 export default connect(mapState, mapDispatch)(Manage);
@@ -158,6 +168,9 @@ Manage.PropTypes = {
   minors: PropTypes.object.isRequired,
   additional: PropTypes.object.isRequired,
   semesters: PropTypes.object.isRequired,
+  canUndo: PropTypes.bool.isRequired,
+  canRedo: PropTypes.bool.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
   initPlan: PropTypes.func.isRequired,
   resetPlan: PropTypes.func.isRequired,
   savePlan: PropTypes.func.isRequired,
@@ -168,4 +181,5 @@ Manage.PropTypes = {
   reorder: PropTypes.func.isRequired,
   undo: PropTypes.func.isRequired,
   redo: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };

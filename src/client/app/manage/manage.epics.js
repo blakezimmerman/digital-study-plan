@@ -3,10 +3,12 @@ import { getType } from 'client/shared/reduxUtils';
 import { api, post } from 'client/shared/apiUtils';
 import {
   INIT_STUDY_PLAN, CLEAR_PLAN_HISTORY, SAVE_PLAN,
-  NEW_COURSE, CLOSE_ADD_MODAL
+  NEW_COURSE, CLOSE_ADD_MODAL, OPEN_SAVE_MODAL
 } from './manage.reducer';
 import { REFRESH_SESSION } from '../login/login.reducer';
 import { user } from '../login/user.selectors';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 import { mapTo } from 'rxjs/operators/mapTo';
@@ -37,7 +39,9 @@ const submitPlanEpic = (actions$, store) =>
 
 const submitSuccessEpic = (actions$) =>
   actions$.ofType(getType(SAVE_PLAN.SUCCESS)).pipe(
-    mapTo(REFRESH_SESSION())
+    switchMap(action =>
+      Observable.of(OPEN_SAVE_MODAL(), REFRESH_SESSION())
+    )
   );
 
 export const manageEpic = combineEpics(
