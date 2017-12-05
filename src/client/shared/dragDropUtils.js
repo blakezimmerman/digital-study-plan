@@ -5,7 +5,15 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 export const DropZone = (props) => (
   <Droppable droppableId={props.id} isDropDisabled={props.disabled}>
     {(provided, snapshot) => (
-      <div ref={provided.innerRef} style={{minHeight: '1.5rem'}}>
+      <div
+        ref={provided.innerRef}
+        style={{
+          minHeight: '1.5rem',
+          backgroundColor: snapshot.isDraggingOver
+            ? 'rgba(149, 255, 149, 0.7)'
+            : 'rgba(0, 0, 0, 0)'
+        }}
+      >
         {props.children}
         {provided.placeholder}
       </div>
